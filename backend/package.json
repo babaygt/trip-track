@@ -1,0 +1,18 @@
+{
+	"name": "trip-track-backend",
+	"version": "1.0.0",
+	"description": "A route-sharing social media platform where users can create, share, and explore road trips.",
+	"main": "server.js",
+	"scripts": {
+		"start": "node server",
+		"dev": "nodemon server"
+	},
+	"author": "Yigit Baba",
+	"license": "MIT",
+	"dependencies": {
+		"express": "^4.19.2"
+	},
+	"devDependencies": {
+		"nodemon": "^3.1.3"
+	}
+}
