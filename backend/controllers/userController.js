@@ -231,22 +231,76 @@ const getFollowing = asyncHandler(async (req, res) => {
 
 // Bookmark route
 const bookmarkRoute = asyncHandler(async (req, res) => {
-	// ...implementation
+	const user = await User.findById(req.body._id)
+	const route = await Route.findById(req.params.routeId)
+
+	if (!route) {
+		res.status(404).json({ message: 'Route not found' })
+	}
+
+	if (user.bookmarks.includes(route._id)) {
+		res.status(400).json({ message: 'Route already bookmarked' })
+	} else {
+		user.bookmarks.push(route._id)
+
+		await user.save()
+
+		res.status(200).json({
+			message: `Route bookmarked successfully`,
+		})
+	}
 })
 
 // Unbookmark route
 const unbookmarkRoute = asyncHandler(async (req, res) => {
-	// ...implementation
+	const user = await User.findById(req.body._id)
+	const route = await Route.findById(req.params.routeId)
+
+	if (!route) {
+		res.status(404).json({ message: 'Route not found' })
+	}
+
+	if (!user.bookmarks.includes(route._id)) {
+		res.status(400).json({ message: 'Route not bookmarked' })
+	} else {
+		user.bookmarks = user.bookmarks.filter(
+			(id) => id.toString() !== route._id.toString()
+		)
+
+		await user.save()
+
+		res.status(200).json({
+			message: `Route unbookmarked successfully`,
+		})
+	}
 })
 
 // Get bookmarks
 const getBookmarks = asyncHandler(async (req, res) => {
-	// ...implementation
+	const user = await User.findById(req.body._id).populate('bookmarks')
+
+	if (user) {
+		res.status(200).json(user.bookmarks)
+	} else {
+		res.status(404).json({ message: 'User not found' })
+	}
 })
 
 // Secure profile
 const secureProfile = asyncHandler(async (req, res) => {
-	// ...implementation
+	const user = await User.findById(req.body._id)
+
+	if (user) {
+		user.secureProfile = !user.secureProfile
+
+		await user.save()
+
+		res.status(200).json({
+			message: `Profile is now ${user.secureProfile ? 'private' : 'public'}`,
+		})
+	} else {
+		res.status(404).json({ message: 'User not found' })
+	}
 })
 
 module.exports = {
