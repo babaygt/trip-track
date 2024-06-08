@@ -136,22 +136,97 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
 // Follow user
 const followUser = asyncHandler(async (req, res) => {
-	// ...implementation
+	const currentUser = await User.findById(req.body._id)
+	const userToFollow = await User.findById(req.params.id)
+
+	if (!userToFollow) {
+		res.status(404).json({ message: 'User not found' })
+	}
+
+	if (userToFollow._id.toString() === currentUser._id.toString()) {
+		res.status(400).json({ message: 'You cannot follow yourself' })
+	}
+
+	if (
+		currentUser.following.includes(userToFollow._id) &&
+		userToFollow.followers.includes(currentUser._id)
+	) {
+		res.status(400).json({ message: 'You are already following this user' })
+	} else {
+		currentUser.following.push(userToFollow._id)
+		userToFollow.followers.push(currentUser._id)
+
+		await currentUser.save()
+		await userToFollow.save()
+
+		res.status(200).json({
+			message: `You are now following ${userToFollow.username}`,
+		})
+	}
 })
 
 // Unfollow user
 const unfollowUser = asyncHandler(async (req, res) => {
-	// ...implementation
+	const currentUser = await User.findById(req.body._id)
+	const userToUnfollow = await User.findById(req.params.id)
+
+	if (!userToUnfollow) {
+		res.status(404).json({ message: 'User not found' })
+	}
+
+	if (userToUnfollow._id.toString() === currentUser._id.toString()) {
+		res.status(400).json({ message: 'You cannot unfollow yourself' })
+	}
+
+	if (
+		!currentUser.following.includes(userToUnfollow._id) &&
+		!userToUnfollow.followers.includes(currentUser._id)
+	) {
+		res.status(400).json({ message: 'You are not following this user' })
+	} else {
+		currentUser.following = currentUser.following.filter(
+			(id) => id.toString() !== userToUnfollow._id.toString()
+		)
+
+		userToUnfollow.followers = userToUnfollow.followers.filter(
+			(id) => id.toString() !== currentUser._id.toString()
+		)
+
+		await currentUser.save()
+		await userToUnfollow.save()
+
+		res.status(200).json({
+			message: `You have unfollowed ${userToUnfollow.username}`,
+		})
+	}
 })
 
 // Get followers
 const getFollowers = asyncHandler(async (req, res) => {
-	// ...implementation
+	const user = await User.findById(req.params.id)
+		.populate('followers', 'name username profilePicture')
+		.lean()
+		.exec()
+
+	if (user) {
+		res.status(200).json(user.followers)
+	} else {
+		res.status(404).json({ message: 'User not found' })
+	}
 })
 
 // Get following
 const getFollowing = asyncHandler(async (req, res) => {
-	// ...implementation
+	const user = await User.findById(req.params.id)
+		.populate('following', 'name username profilePicture')
+		.lean()
+		.exec()
+
+	if (user) {
+		res.status(200).json(user.following)
+	} else {
+		res.status(404).json({ message: 'User not found' })
+	}
 })
 
 // Bookmark route
