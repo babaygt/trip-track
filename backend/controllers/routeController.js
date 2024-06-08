@@ -87,22 +87,72 @@ const deleteRoute = asyncHandler(async (req, res) => {
 
 // Like a route
 const likeRoute = asyncHandler(async (req, res) => {
-	// ...implementation
+	const route = await Route.findById(req.params.id)
+
+	if (!route) {
+		return res.status(404).json({ message: 'Route not found' })
+	}
+
+	const userId = req.body._id
+	const isLiked = route.likes.includes(userId)
+
+	if (isLiked) {
+		route.likes = route.likes.filter(
+			(like) => like.toString() !== userId.toString()
+		)
+	} else {
+		route.likes.push(userId)
+	}
+
+	await route.save()
+	res.status(200).json({
+		message: isLiked
+			? 'Route unliked successfully'
+			: 'Route liked successfully',
+	})
 })
 
 // Comment on a route
 const commentOnRoute = asyncHandler(async (req, res) => {
-	// ...implementation
+	const { text } = req.body
+	const route = await Route.findById(req.params.id)
+
+	if (!route) {
+		res.status(404).json({ message: 'Route not found' })
+	}
+
+	const comment = {
+		user: req.body._id,
+		text,
+	}
+
+	route.comments.push(comment)
+	await route.save()
+	res.status(201).json({ message: 'Comment added successfully' })
 })
 
 // Get followed routes
 const getFollowedRoutes = asyncHandler(async (req, res) => {
-	// ...implementation
+	const userId = req.params.userId
+	const user = await User.findById(userId).populate('following', 'username')
+
+	if (!user) {
+		return res.status(404).json({ message: 'User not found' })
+	}
+
+	const routes = await Route.find({
+		creator: { $in: user.following },
+	}).populate('creator', 'name username profilePicture')
+
+	res.json(routes)
 })
 
 // Get general routes
 const getGeneralRoutes = asyncHandler(async (req, res) => {
-	// ...implementation
+	const routes = await Route.find({})
+		.sort({ likes: -1 })
+		.populate('creator', 'name username profilePicture')
+	res.json(routes)
 })
 
 module.exports = {
