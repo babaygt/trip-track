@@ -6,6 +6,6 @@ const {
 const router = express.Router()
 
 router.post('/', createConversation)
-router.get('/', getConversations)
+router.get('/:userId', getConversations)
 
 module.exports = router
