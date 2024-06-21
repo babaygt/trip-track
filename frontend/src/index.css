@@ -224,18 +224,26 @@ body {
 /* Input Box */
 
 .inputBox {
-	position: relative;
 	width: 100%;
 	margin-bottom: var(--size-200);
+}
+
+.inputBox-wrapper {
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: 100%;
 }
 
 .inputBox-input {
 	width: 100%;
 	border-radius: var(--size-500);
 	padding: var(--size-400);
+	padding-left: var(--size-700); /* Ensure this is enough space for the icon */
 	background-color: var(--color-neutral-200);
-	padding-left: var(--size-700);
 	border: 1px solid var(--color-neutral-300);
+	box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+	transition: background-color 0.3s, border-color 0.3s; /* Smooth transition */
 }
 
 .inputBox-input:focus {
@@ -247,19 +255,32 @@ body {
 .inputBox-icon {
 	position: absolute;
 	left: 1rem;
-	top: 50%;
-	transform: translateY(-50%);
+	pointer-events: none;
 }
 
 .inputBox-icon--password {
 	right: 1rem;
 	cursor: pointer;
 	left: auto;
+	pointer-events: auto; /* Allow clicking on the eye icon */
 }
 
 input:disabled,
 input:disabled ~ .inputBox-icon {
 	opacity: 0.5;
+}
+
+/* Adding the class for the eye icon specifically */
+.inputBox .fi-rr-eye {
+	left: auto;
+	right: 1rem;
+	cursor: pointer;
+}
+
+.inputBox-validation {
+	color: var(--color-accent-600);
+	font-size: var(--font-size-300);
+	margin-top: var(--size-100);
 }
 
 /* Adding the class for the eye icon specifically */
@@ -347,6 +368,14 @@ input:disabled ~ .inputBox-icon {
 	text-align: center;
 	text-transform: uppercase;
 	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+/* Add button diabled css */
+
+.button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
 }
 
 .button-primary {

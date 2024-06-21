@@ -9,21 +9,19 @@ const registerUser = asyncHandler(async (req, res) => {
 
 	// Confirm data
 	if (!name || !username || !email || !password) {
-		res.status(400).json({ message: 'Please fill in all fields' })
+		return res.status(400).json({ message: 'Please fill in all fields' })
 	}
 
 	// Check for duplicate username
 	const duplicateUsername = await User.findOne({ username }).lean().exec()
-
 	if (duplicateUsername) {
-		res.status(400).json({ message: 'Username already exists' })
+		return res.status(400).json({ message: 'Username already exists' })
 	}
 
 	// Check for duplicate email
 	const duplicateEmail = await User.findOne({ email }).lean().exec()
-
 	if (duplicateEmail) {
-		res.status(400).json({ message: 'Email already exists' })
+		return res.status(400).json({ message: 'Email already exists' })
 	}
 
 	// Hash password
@@ -38,7 +36,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
 	if (user) {
 		res.status(201).json({
-			message: ` User ${user.username} created successfully`,
+			message: `User ${user.username} created successfully`,
 		})
 	} else {
 		res.status(400).json({ message: 'Invalid user data' })
@@ -51,7 +49,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
 	// Confirm data
 	if (!email || !password) {
-		res.status(400).json({ message: 'Please fill in all fields' })
+		return res.status(400).json({ message: 'Please fill in all fields' })
 	}
 
 	// Check if user exists
