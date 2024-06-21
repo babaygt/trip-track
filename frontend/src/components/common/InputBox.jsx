@@ -7,6 +7,8 @@ export const InputBox = ({
 	defaultValue,
 	placeholder,
 	icon,
+	value,
+	onChange,
 }) => {
 	const [passwordVisible, setPasswordVisible] = useState(false)
 	return (
@@ -19,6 +21,8 @@ export const InputBox = ({
 				id={id}
 				defaultValue={defaultValue}
 				placeholder={placeholder}
+				value={value}
+				onChange={onChange}
 				className='inputBox-input'
 			/>
 			<i className={`fi ${icon} inputBox-icon`}></i>

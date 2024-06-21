@@ -2,9 +2,30 @@
 
 :root {
 	/* Color Palette */
+
+	--color-primary-900: hsl(145, 63%, 24%);
+	--color-primary-800: hsl(145, 63%, 30%);
+	--color-primary-700: hsl(145, 63%, 39%);
+	--color-primary-600: hsl(145, 63%, 50%);
 	--color-primary-500: hsl(145, 63%, 42%);
+	--color-primary-400: hsl(145, 63%, 70%);
+	--color-primary-300: hsl(145, 63%, 84%);
+
+	--color-secondary-900: hsl(48, 89%, 24%);
+	--color-secondary-800: hsl(48, 89%, 30%);
+	--color-secondary-700: hsl(48, 89%, 39%);
+	--color-secondary-600: hsl(48, 89%, 50%);
 	--color-secondary-500: hsl(48, 89%, 50%);
+	--color-secondary-400: hsl(48, 89%, 70%);
+	--color-secondary-300: hsl(48, 89%, 84%);
+
+	--color-accent-900: hsl(6, 78%, 24%);
+	--color-accent-800: hsl(6, 78%, 30%);
+	--color-accent-700: hsl(6, 78%, 39%);
+	--color-accent-600: hsl(6, 78%, 50%);
 	--color-accent-500: hsl(6, 78%, 57%);
+	--color-accent-400: hsl(6, 78%, 70%);
+	--color-accent-300: hsl(6, 78%, 84%);
 
 	--color-neutral-900: hsl(210, 29%, 24%);
 	--color-neutral-800: hsl(209, 23%, 30%);
@@ -29,12 +50,12 @@
 	--font-size-500: 1rem;
 	--font-size-600: 1.25rem;
 	--font-size-700: 1.875rem;
-	--font-size-800: 2.5rem;
+	--font-size-800: 2.25rem;
 	--font-size-900: 3.5rem;
 
 	--font-size-body: var(--font-size-400);
 	--font-size-nav: var(--font-size-500);
-	--font-size-button: var(--font-size-300);
+	--font-size-button: var(--font-size-600);
 
 	--size-100: 0.25rem;
 	--size-200: 0.5rem;
@@ -42,17 +63,10 @@
 	--size-400: 1rem;
 	--size-500: 1.5rem;
 	--size-600: 2rem;
+	--size-650: 2.5rem;
 	--size-700: 3rem;
 	--size-800: 4rem;
 	--size-900: 5rem;
-}
-
-/* General Styling */
-
-body {
-	font-family: var(--font-family-body);
-	margin: 0;
-	padding: 0;
 }
 
 /* Reset */
@@ -151,6 +165,14 @@ textarea:not([rows]) {
 	scroll-margin-block: 5ex;
 }
 
+/* General Styling */
+
+body {
+	font-family: var(--font-family-body);
+	margin: 0;
+	padding: 0;
+}
+
 /* Navigation */
 
 .primary-header {
@@ -210,9 +232,9 @@ textarea:not([rows]) {
 .inputBox-input {
 	width: 100%;
 	border-radius: var(--size-500);
-	padding: var(--size-300);
+	padding: var(--size-400);
 	background-color: var(--color-neutral-200);
-	padding-left: 3rem;
+	padding-left: var(--size-700);
 	border: 1px solid var(--color-neutral-300);
 }
 
@@ -247,6 +269,64 @@ input:disabled ~ .inputBox-icon {
 	cursor: pointer;
 }
 
+/* Auth Form */
+.authForm {
+	padding: var(--size-400) 10vw;
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.authForm-form {
+	width: 100%;
+	max-width: 400px;
+}
+
+.authForm-title {
+	font-size: var(--font-size-800);
+	font-weight: var(--font-weight-bold);
+	line-height: var(--size-650);
+	text-align: center;
+	text-transform: capitalize;
+	margin-bottom: var(--size-700);
+	color: var(--color-primary-500);
+}
+
+.authForm-seperator {
+	display: flex;
+	align-items: center;
+	gap: var(--size-200);
+	width: 100%;
+	position: relative;
+	margin-top: var(--size-650);
+	margin-bottom: var(--size-650);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-primary-900);
+	text-transform: uppercase;
+	opacity: 0.7;
+}
+
+.authForm-seperator::before,
+.authForm-seperator::after {
+	content: '';
+	flex: 1;
+	border-bottom: 1px solid var(--color-primary-700);
+}
+
+.authForm-text {
+	margin-top: var(--size-500);
+	color: var(--color-neutral-900);
+	font-size: var(--font-size-600);
+	text-align: center;
+}
+
+.authForm-link {
+	color: var(--color-primary-500);
+	text-decoration: underline;
+	margin-left: var(--size-100);
+}
+
 /* Utility classes */
 
 .container {
@@ -255,4 +335,32 @@ input:disabled ~ .inputBox-icon {
 
 	width: min(var(--max-width), 100% - (var(--padding) * 2));
 	margin-inline: auto;
+}
+
+.button {
+	display: inline-block;
+	padding: var(--size-300) var(--size-500);
+	margin-top: var(--size-400);
+	border-radius: var(--size-500);
+	font-size: var(--font-size-button);
+	font-weight: var(--font-weight-semi-bold);
+	text-align: center;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+
+.button-primary {
+	background-color: var(--color-primary-500);
+	color: white;
+}
+
+.button-primary:hover,
+.button-primary:focus {
+	background-color: var(--color-primary-700);
+}
+
+.center {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
