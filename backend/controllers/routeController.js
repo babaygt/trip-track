@@ -8,11 +8,13 @@ const createRoute = asyncHandler(async (req, res) => {
 
 	// Confirm data
 	if (!startPoint || !endPoint || !waypoints || !vehicleType) {
-		res.status(400).json({ message: 'Please fill in all required fields' })
+		return res
+			.status(400)
+			.json({ message: 'Please fill in all required fields' })
 	}
 
 	const route = await Route.create({
-		creator: req.body._id,
+		creator: req.user.id,
 		startPoint,
 		endPoint,
 		waypoints,
@@ -21,9 +23,9 @@ const createRoute = asyncHandler(async (req, res) => {
 	})
 
 	if (route) {
-		res.status(201).json({ message: 'Route created successfully' })
+		return res.status(201).json({ message: 'Route created successfully' })
 	} else {
-		res.status(400).json({ message: 'Invalid route data' })
+		return res.status(400).json({ message: 'Invalid route data' })
 	}
 })
 
@@ -35,9 +37,9 @@ const getRoute = asyncHandler(async (req, res) => {
 		.exec()
 
 	if (route) {
-		res.status(200).json(route)
+		return res.status(200).json(route)
 	} else {
-		res.status(404).json({ message: 'Route not found' })
+		return res.status(404).json({ message: 'Route not found' })
 	}
 })
 
@@ -47,11 +49,11 @@ const updateRoute = asyncHandler(async (req, res) => {
 	const route = await Route.findById(req.params.id)
 
 	if (!route) {
-		res.status(404).json({ message: 'Route not found' })
+		return res.status(404).json({ message: 'Route not found' })
 	}
 
-	if (route.creator.toString() !== req.body._id.toString()) {
-		res
+	if (route.creator.toString() !== req.user.id.toString()) {
+		return res
 			.status(401)
 			.json({ message: 'You are not authorized to update this route' })
 	}
@@ -64,7 +66,7 @@ const updateRoute = asyncHandler(async (req, res) => {
 
 	await route.save()
 
-	res.status(200).json({ message: 'Route updated successfully' })
+	return res.status(200).json({ message: 'Route updated successfully' })
 })
 
 // Delete a route
@@ -72,17 +74,17 @@ const deleteRoute = asyncHandler(async (req, res) => {
 	const route = await Route.findById(req.params.id)
 
 	if (!route) {
-		res.status(404).json({ message: 'Route not found' })
+		return res.status(404).json({ message: 'Route not found' })
 	}
 
-	if (route.creator.toString() !== req.body._id.toString()) {
-		res
+	if (route.creator.toString() !== req.user.id.toString()) {
+		return res
 			.status(401)
 			.json({ message: 'You are not authorized to delete this route' })
 	}
 
 	await route.deleteOne()
-	res.status(200).json({ message: 'Route deleted successfully' })
+	return res.status(200).json({ message: 'Route deleted successfully' })
 })
 
 // Like a route
@@ -93,7 +95,7 @@ const likeRoute = asyncHandler(async (req, res) => {
 		return res.status(404).json({ message: 'Route not found' })
 	}
 
-	const userId = req.body._id
+	const userId = req.user.id
 	const isLiked = route.likes.includes(userId)
 
 	if (isLiked) {
@@ -105,7 +107,7 @@ const likeRoute = asyncHandler(async (req, res) => {
 	}
 
 	await route.save()
-	res.status(200).json({
+	return res.status(200).json({
 		message: isLiked
 			? 'Route unliked successfully'
 			: 'Route liked successfully',
@@ -118,17 +120,17 @@ const commentOnRoute = asyncHandler(async (req, res) => {
 	const route = await Route.findById(req.params.id)
 
 	if (!route) {
-		res.status(404).json({ message: 'Route not found' })
+		return res.status(404).json({ message: 'Route not found' })
 	}
 
 	const comment = {
-		user: req.body._id,
+		user: req.user.id,
 		text,
 	}
 
 	route.comments.push(comment)
 	await route.save()
-	res.status(201).json({ message: 'Comment added successfully' })
+	return res.status(201).json({ message: 'Comment added successfully' })
 })
 
 // Get followed routes
@@ -144,7 +146,7 @@ const getFollowedRoutes = asyncHandler(async (req, res) => {
 		creator: { $in: user.following },
 	}).populate('creator', 'name username profilePicture')
 
-	res.json(routes)
+	return res.json(routes)
 })
 
 // Get general routes
@@ -152,7 +154,7 @@ const getGeneralRoutes = asyncHandler(async (req, res) => {
 	const routes = await Route.find({})
 		.sort({ likes: -1 })
 		.populate('creator', 'name username profilePicture')
-	res.json(routes)
+	return res.json(routes)
 })
 
 module.exports = {

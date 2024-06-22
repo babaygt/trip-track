@@ -3,9 +3,10 @@ const {
 	createConversation,
 	getConversations,
 } = require('../controllers/conversationController')
+const verifyJWT = require('../middleware/verifyJWT')
 const router = express.Router()
 
-router.post('/', createConversation)
-router.get('/:userId', getConversations)
+router.post('/', verifyJWT, createConversation)
+router.get('/:userId', verifyJWT, getConversations)
 
 module.exports = router

@@ -35,11 +35,11 @@ const registerUser = asyncHandler(async (req, res) => {
 	})
 
 	if (user) {
-		res.status(201).json({
+		return res.status(201).json({
 			message: `User ${user.username} created successfully`,
 		})
 	} else {
-		res.status(400).json({ message: 'Invalid user data' })
+		return res.status(400).json({ message: 'Invalid user data' })
 	}
 })
 
@@ -51,15 +51,15 @@ const getUserProfile = asyncHandler(async (req, res) => {
 		.exec()
 
 	if (user) {
-		res.status(200).json(user)
+		return res.status(200).json(user)
 	} else {
-		res.status(404).json({ message: 'User not found' })
+		return res.status(404).json({ message: 'User not found' })
 	}
 })
 
 // Update user profile
 const updateUserProfile = asyncHandler(async (req, res) => {
-	const user = await User.findById(req.body._id)
+	const user = await User.findById(req.user.id)
 
 	if (user) {
 		user.name = req.body.name || user.name
@@ -69,7 +69,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 		user.profilePicture = req.body.profilePicture || user.profilePicture
 
 		// Check for duplicate username
-
 		const duplicateUsername = await User.findOne({ username: user.username })
 			.lean()
 			.exec()
@@ -84,14 +83,14 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 			duplicateUsername &&
 			duplicateUsername._id.toString() !== user._id.toString()
 		) {
-			res.status(400).json({ message: 'Username already exists' })
+			return res.status(400).json({ message: 'Username already exists' })
 		}
 
 		if (
 			duplicateEmail &&
 			duplicateEmail._id.toString() !== user._id.toString()
 		) {
-			res.status(400).json({ message: 'Email already exists' })
+			return res.status(400).json({ message: 'Email already exists' })
 		}
 
 		if (req.body.password) {
@@ -100,32 +99,34 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
 		const updatedUser = await user.save()
 
-		res
+		return res
 			.status(200)
 			.json({ message: `User ${updatedUser.username} updated successfully` })
 	} else {
-		res.status(404).json({ message: 'User not found' })
+		return res.status(404).json({ message: 'User not found' })
 	}
 })
 
 // Follow user
 const followUser = asyncHandler(async (req, res) => {
-	const currentUser = await User.findById(req.body._id)
+	const currentUser = await User.findById(req.user.id)
 	const userToFollow = await User.findById(req.params.id)
 
 	if (!userToFollow) {
-		res.status(404).json({ message: 'User not found' })
+		return res.status(404).json({ message: 'User not found' })
 	}
 
 	if (userToFollow._id.toString() === currentUser._id.toString()) {
-		res.status(400).json({ message: 'You cannot follow yourself' })
+		return res.status(400).json({ message: 'You cannot follow yourself' })
 	}
 
 	if (
 		currentUser.following.includes(userToFollow._id) &&
 		userToFollow.followers.includes(currentUser._id)
 	) {
-		res.status(400).json({ message: 'You are already following this user' })
+		return res
+			.status(400)
+			.json({ message: 'You are already following this user' })
 	} else {
 		currentUser.following.push(userToFollow._id)
 		userToFollow.followers.push(currentUser._id)
@@ -133,7 +134,7 @@ const followUser = asyncHandler(async (req, res) => {
 		await currentUser.save()
 		await userToFollow.save()
 
-		res.status(200).json({
+		return res.status(200).json({
 			message: `You are now following ${userToFollow.username}`,
 		})
 	}
@@ -141,22 +142,22 @@ const followUser = asyncHandler(async (req, res) => {
 
 // Unfollow user
 const unfollowUser = asyncHandler(async (req, res) => {
-	const currentUser = await User.findById(req.body._id)
+	const currentUser = await User.findById(req.user.id)
 	const userToUnfollow = await User.findById(req.params.id)
 
 	if (!userToUnfollow) {
-		res.status(404).json({ message: 'User not found' })
+		return res.status(404).json({ message: 'User not found' })
 	}
 
 	if (userToUnfollow._id.toString() === currentUser._id.toString()) {
-		res.status(400).json({ message: 'You cannot unfollow yourself' })
+		return res.status(400).json({ message: 'You cannot unfollow yourself' })
 	}
 
 	if (
 		!currentUser.following.includes(userToUnfollow._id) &&
 		!userToUnfollow.followers.includes(currentUser._id)
 	) {
-		res.status(400).json({ message: 'You are not following this user' })
+		return res.status(400).json({ message: 'You are not following this user' })
 	} else {
 		currentUser.following = currentUser.following.filter(
 			(id) => id.toString() !== userToUnfollow._id.toString()
@@ -169,7 +170,7 @@ const unfollowUser = asyncHandler(async (req, res) => {
 		await currentUser.save()
 		await userToUnfollow.save()
 
-		res.status(200).json({
+		return res.status(200).json({
 			message: `You have unfollowed ${userToUnfollow.username}`,
 		})
 	}
@@ -183,9 +184,9 @@ const getFollowers = asyncHandler(async (req, res) => {
 		.exec()
 
 	if (user) {
-		res.status(200).json(user.followers)
+		return res.status(200).json(user.followers)
 	} else {
-		res.status(404).json({ message: 'User not found' })
+		return res.status(404).json({ message: 'User not found' })
 	}
 })
 
@@ -197,29 +198,29 @@ const getFollowing = asyncHandler(async (req, res) => {
 		.exec()
 
 	if (user) {
-		res.status(200).json(user.following)
+		return res.status(200).json(user.following)
 	} else {
-		res.status(404).json({ message: 'User not found' })
+		return res.status(404).json({ message: 'User not found' })
 	}
 })
 
 // Bookmark route
 const bookmarkRoute = asyncHandler(async (req, res) => {
-	const user = await User.findById(req.body._id)
+	const user = await User.findById(req.user.id)
 	const route = await Route.findById(req.params.routeId)
 
 	if (!route) {
-		res.status(404).json({ message: 'Route not found' })
+		return res.status(404).json({ message: 'Route not found' })
 	}
 
 	if (user.bookmarks.includes(route._id)) {
-		res.status(400).json({ message: 'Route already bookmarked' })
+		return res.status(400).json({ message: 'Route already bookmarked' })
 	} else {
 		user.bookmarks.push(route._id)
 
 		await user.save()
 
-		res.status(200).json({
+		return res.status(200).json({
 			message: `Route bookmarked successfully`,
 		})
 	}
@@ -227,15 +228,15 @@ const bookmarkRoute = asyncHandler(async (req, res) => {
 
 // Unbookmark route
 const unbookmarkRoute = asyncHandler(async (req, res) => {
-	const user = await User.findById(req.body._id)
+	const user = await User.findById(req.user.id)
 	const route = await Route.findById(req.params.routeId)
 
 	if (!route) {
-		res.status(404).json({ message: 'Route not found' })
+		return res.status(404).json({ message: 'Route not found' })
 	}
 
 	if (!user.bookmarks.includes(route._id)) {
-		res.status(400).json({ message: 'Route not bookmarked' })
+		return res.status(400).json({ message: 'Route not bookmarked' })
 	} else {
 		user.bookmarks = user.bookmarks.filter(
 			(id) => id.toString() !== route._id.toString()
@@ -243,7 +244,7 @@ const unbookmarkRoute = asyncHandler(async (req, res) => {
 
 		await user.save()
 
-		res.status(200).json({
+		return res.status(200).json({
 			message: `Route unbookmarked successfully`,
 		})
 	}
@@ -251,35 +252,34 @@ const unbookmarkRoute = asyncHandler(async (req, res) => {
 
 // Get bookmarks
 const getBookmarks = asyncHandler(async (req, res) => {
-	const user = await User.findById(req.body._id).populate('bookmarks')
+	const user = await User.findById(req.params.id).populate('bookmarks')
 
 	if (user) {
-		res.status(200).json(user.bookmarks)
+		return res.status(200).json(user.bookmarks)
 	} else {
-		res.status(404).json({ message: 'User not found' })
+		return res.status(404).json({ message: 'User not found' })
 	}
 })
 
 // Secure profile
 const secureProfile = asyncHandler(async (req, res) => {
-	const user = await User.findById(req.body._id)
+	const user = await User.findById(req.user.id)
 
 	if (user) {
 		user.secureProfile = !user.secureProfile
 
 		await user.save()
 
-		res.status(200).json({
+		return res.status(200).json({
 			message: `Profile is now ${user.secureProfile ? 'private' : 'public'}`,
 		})
 	} else {
-		res.status(404).json({ message: 'User not found' })
+		return res.status(404).json({ message: 'User not found' })
 	}
 })
 
 module.exports = {
 	registerUser,
-	loginUser,
 	getUserProfile,
 	updateUserProfile,
 	followUser,

@@ -3,10 +3,11 @@ const asyncHandler = require('express-async-handler')
 
 // Create a new conversation
 const createConversation = asyncHandler(async (req, res) => {
-	const { participantId, userId } = req.body
+	const { participantId } = req.body
+	const userId = req.user.id
 
 	if (!participantId) {
-		res.status(400).json({ message: 'Please provide a participant id' })
+		return res.status(400).json({ message: 'Please provide a participant id' })
 	}
 
 	const existingConversation = await Conversation.findOne({
@@ -14,26 +15,26 @@ const createConversation = asyncHandler(async (req, res) => {
 	})
 
 	if (existingConversation) {
-		res.json(existingConversation)
+		return res.json(existingConversation)
 	} else {
 		const conversation = new Conversation({
 			participants: [userId, participantId],
 		})
 
 		const createdConversation = await conversation.save()
-		res.status(201).json(createdConversation)
+		return res.status(201).json(createdConversation)
 	}
 })
 
 // Get all conversations for a user
 const getConversations = asyncHandler(async (req, res) => {
-	const userId = req.params.userId
+	const userId = req.user.id
 
 	const conversations = await Conversation.find({
 		participants: userId,
 	}).populate('participants', 'name username profilePicture')
 
-	res.json(conversations)
+	return res.json(conversations)
 })
 
 module.exports = {

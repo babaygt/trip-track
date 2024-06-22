@@ -13,17 +13,18 @@ const {
 	getBookmarks,
 	secureProfile,
 } = require('../controllers/userController')
+const verifyJWT = require('../middleware/verifyJWT')
 
 router.post('/register', registerUser)
-router.get('/profile/:id', getUserProfile)
-router.put('/profile', updateUserProfile)
-router.put('/follow/:id', followUser)
-router.put('/unfollow/:id', unfollowUser)
-router.get('/followers/:id', getFollowers)
-router.get('/following/:id', getFollowing)
-router.put('/bookmark/:routeId', bookmarkRoute)
-router.put('/unbookmark/:routeId', unbookmarkRoute)
-router.get('/bookmarks', getBookmarks)
-router.put('/secure', secureProfile)
+router.get('/profile/:id', getUserProfile) // Public
+router.put('/profile', verifyJWT, updateUserProfile)
+router.put('/follow/:id', verifyJWT, followUser)
+router.put('/unfollow/:id', verifyJWT, unfollowUser)
+router.get('/followers/:id', getFollowers) // Public
+router.get('/following/:id', getFollowing) // Public
+router.put('/bookmark/:routeId', verifyJWT, bookmarkRoute)
+router.put('/unbookmark/:routeId', verifyJWT, unbookmarkRoute)
+router.get('/bookmarks/:id', getBookmarks) // Public
+router.put('/secure', verifyJWT, secureProfile)
 
 module.exports = router
