@@ -176,7 +176,7 @@ body {
 /* Navigation */
 
 .primary-header {
-	position: static;
+	position: sticky;
 	z-index: 100;
 	top: 0;
 	width: 100%;
@@ -198,8 +198,9 @@ body {
 .nav-list {
 	font-size: var(--font-size-nav);
 	display: flex;
+	align-items: center;
 	gap: clamp(var(--size-400), 5vw, var(--size-600));
-	font-weight: var(--font-weight-semi-bold);
+	font-weight: var(--font-weight-bold);
 }
 
 .nav-item {
@@ -208,7 +209,7 @@ body {
 .nav-item a {
 	text-decoration: none;
 	color: var(--color-neutral-900);
-	font-weight: var(--font-weight-semi-bold);
+	font-weight: var(--font-weight-bold);
 }
 
 .nav-item a:hover,
@@ -386,6 +387,30 @@ input:disabled ~ .inputBox-icon {
 .button-primary:hover,
 .button-primary:focus {
 	background-color: var(--color-primary-700);
+}
+
+.button-logout {
+	background-color: var(--color-accent-500);
+	color: white;
+	padding: var(--size-200) var(--size-400);
+	border-radius: var(--size-500);
+	font-size: var(--font-size-nav);
+	font-weight: var(--font-weight-semi-bold);
+	text-align: center;
+	text-transform: capitalize;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	border: none; /* Remove any default button border */
+}
+
+.button-logout:hover,
+.button-logout:focus {
+	background-color: var(--color-accent-700);
+}
+
+.button-logout:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
 }
 
 .center {

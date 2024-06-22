@@ -26,7 +26,7 @@ const login = asyncHandler(async (req, res) => {
 		return res.status(401).json({ message: 'Invalid credentials' })
 	}
 
-	// Create acces token
+	// Create access token
 	const accessToken = jwt.sign(
 		{
 			UserInfo: {
@@ -41,6 +41,13 @@ const login = asyncHandler(async (req, res) => {
 	)
 
 	// Create refresh token
+	const refreshToken = jwt.sign(
+		{ UserInfo: { id: user._id } },
+		process.env.REFRESH_TOKEN_SECRET,
+		{ expiresIn: '7d' }
+	)
+
+	// Set refresh token in cookie
 	res.cookie('jwt', refreshToken, {
 		httpOnly: true, // cookie cannot be accessed by client-side scripts (XSS protection)
 		secure: true, // if true cookie will only be sent over HTTPS
@@ -72,7 +79,6 @@ const refresh = (req, res) => {
 			if (!user) return res.status(401).json({ message: 'User not found' })
 
 			// Create new access token
-
 			const accessToken = jwt.sign(
 				{
 					UserInfo: {
@@ -92,7 +98,6 @@ const refresh = (req, res) => {
 }
 
 // Logout user
-
 const logout = (req, res) => {
 	const cookies = req.cookies
 	if (!cookies?.jwt) return res.sendStatus(204) // No content
