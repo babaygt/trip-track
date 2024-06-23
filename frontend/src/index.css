@@ -2,7 +2,6 @@
 
 :root {
 	/* Color Palette */
-
 	--color-primary-900: hsl(145, 63%, 24%);
 	--color-primary-800: hsl(145, 63%, 30%);
 	--color-primary-700: hsl(145, 63%, 39%);
@@ -289,6 +288,53 @@ input:disabled ~ .inputBox-icon {
 	left: auto;
 	right: 1rem;
 	cursor: pointer;
+}
+
+/* Checkbox */
+
+.checkbox {
+	display: flex;
+	align-items: center;
+	margin-top: var(--size-400);
+}
+
+/* Styles for the checkbox label */
+.checkbox-label {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	font-size: var(--font-size-body);
+	color: var(--color-neutral-900);
+}
+
+/* Styles for the checkbox input */
+.checkbox-input {
+	margin-right: var(--size-200);
+	position: relative;
+	width: 1.25rem; /* Adjusted width */
+	height: 1.25rem; /* Adjusted height */
+	appearance: none;
+	background-color: var(--color-neutral-100);
+	border: 2px solid var(--color-primary-500);
+	border-radius: 0.25rem;
+	cursor: pointer;
+}
+
+.checkbox-input:checked {
+	background-color: var(--color-primary-500);
+	border-color: var(--color-primary-500);
+}
+
+.checkbox-input:checked::after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) rotate(45deg);
+	width: 0.4rem; /* Adjusted width */
+	height: 0.7rem; /* Adjusted height */
+	border: solid white;
+	border-width: 0 0.15rem 0.15rem 0;
 }
 
 /* Auth Form */
