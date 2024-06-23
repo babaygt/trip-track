@@ -2,11 +2,17 @@ import { AuthLayout } from './pages/auth/AuthLayout'
 import { Login } from './pages/auth/Login'
 import { Register } from './pages/auth/Register'
 import { Feed } from './pages/feed/Feed'
+import PersistLogin from './features/auth/PersistLogin'
 
 const routes = [
 	{
-		path: '/',
-		element: <Feed />,
+		element: <PersistLogin />,
+		children: [
+			{
+				path: '/',
+				element: <Feed />,
+			},
+		],
 	},
 	{
 		path: '/auth',

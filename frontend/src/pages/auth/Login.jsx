@@ -6,10 +6,14 @@ import { useLoginMutation } from '../../features/auth/authApiSlice'
 import { setCredentials } from '../../features/auth/authSlice'
 import { Toaster, toast } from 'react-hot-toast'
 import ClipLoader from 'react-spinners/ClipLoader'
+import usePersist from '../../hooks/usePersist'
+import Checkbox from '../../components/common/Checkbox'
 
 export const Login = () => {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
+
+	const [persist, setPersist] = usePersist()
 
 	const [formValues, setFormValues] = useState({
 		email: '',
@@ -58,46 +62,59 @@ export const Login = () => {
 		}
 	}, [isError, error])
 
+	const handleToggle = () => setPersist((prev) => !prev)
+
 	if (isLoading) return <ClipLoader color='#28af60' />
 
 	return (
-		<form className='authForm-form' onSubmit={handleSubmit}>
+		<>
 			<Toaster position='top-center' reverseOrder={false} />
-			<h1 className='authForm-title'>Welcome back</h1>
-			<InputBox
-				name='email'
-				type='email'
-				placeholder='Email'
-				icon='fi-rr-envelope'
-				value={formValues.email}
-				onChange={handleInputChange}
-			/>
-			<InputBox
-				name='password'
-				type='password'
-				placeholder='Password'
-				icon='fi-rr-key'
-				value={formValues.password}
-				onChange={handleInputChange}
-			/>
-			<button
-				className='button button-primary center'
-				type='submit'
-				disabled={!isFormValid}
-			>
-				Login
-			</button>
 
-			<div className='authForm-seperator'>
-				<span>or</span>
-			</div>
+			<form className='authForm-form' onSubmit={handleSubmit}>
+				<h1 className='authForm-title'>Welcome back</h1>
+				<InputBox
+					name='email'
+					type='email'
+					placeholder='Email'
+					icon='fi-rr-envelope'
+					value={formValues.email}
+					onChange={handleInputChange}
+				/>
+				<InputBox
+					name='password'
+					type='password'
+					placeholder='Password'
+					icon='fi-rr-key'
+					value={formValues.password}
+					onChange={handleInputChange}
+				/>
 
-			<p className='authForm-text'>
-				Don&apos;t have an account?
-				<Link to='/auth/register' className='authForm-link'>
-					Join us today!
-				</Link>
-			</p>
-		</form>
+				<Checkbox
+					id='persist'
+					label='Stay logged in'
+					checked={persist}
+					onChange={handleToggle}
+				/>
+
+				<button
+					className='button button-primary center'
+					type='submit'
+					disabled={!isFormValid}
+				>
+					Login
+				</button>
+
+				<div className='authForm-seperator'>
+					<span>or</span>
+				</div>
+
+				<p className='authForm-text'>
+					Don&apos;t have an account?
+					<Link to='/auth/register' className='authForm-link'>
+						Join us today!
+					</Link>
+				</p>
+			</form>
+		</>
 	)
 }
