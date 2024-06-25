@@ -51,15 +51,24 @@ export const Navbar = () => {
 							<NavLink to='/'>Home</NavLink>
 						</li>
 						{token ? (
-							<li className='nav-item'>
-								{isLoading ? (
-									<ClipLoader color='#28af60' size={25} />
-								) : (
-									<button onClick={handleLogout} className='button-logout'>
-										Logout
-									</button>
-								)}
-							</li>
+							<>
+								<li className='nav-item'>
+									<NavLink to='/create-route'>Create Route</NavLink>
+								</li>
+
+								<li className='nav-item'>
+									{isLoading ? (
+										<ClipLoader color='#28af60' size={25} />
+									) : (
+										<button
+											onClick={handleLogout}
+											className='button button-logout'
+										>
+											Logout
+										</button>
+									)}
+								</li>
+							</>
 						) : (
 							<>
 								<li className='nav-item'>

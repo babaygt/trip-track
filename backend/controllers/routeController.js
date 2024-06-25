@@ -1,6 +1,7 @@
 const User = require('../models/User')
 const Route = require('../models/Route')
 const asyncHandler = require('express-async-handler')
+const axios = require('axios')
 
 // Create a new route
 const createRoute = asyncHandler(async (req, res) => {
@@ -157,6 +158,24 @@ const getGeneralRoutes = asyncHandler(async (req, res) => {
 	return res.json(routes)
 })
 
+// Get suggestions for places
+const getSuggestions = asyncHandler(async (req, res) => {
+	const { q } = req.query
+
+	if (!q) {
+		return res.status(400).json({ message: 'Query parameter is required' })
+	}
+
+	try {
+		const response = await axios.get(
+			`https://nominatim.openstreetmap.org/search?format=json&q=${q}`
+		)
+		return res.status(200).json(response.data)
+	} catch (error) {
+		return res.status(500).json({ message: 'Error fetching suggestions' })
+	}
+})
+
 module.exports = {
 	createRoute,
 	getRoute,
@@ -166,4 +185,5 @@ module.exports = {
 	commentOnRoute,
 	getFollowedRoutes,
 	getGeneralRoutes,
+	getSuggestions,
 }

@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const {
+	getSuggestions,
 	createRoute,
 	getRoute,
 	updateRoute,
@@ -12,6 +13,7 @@ const {
 } = require('../controllers/routeController')
 const verifyJWT = require('../middleware/verifyJWT')
 
+router.get('/suggestions', verifyJWT, getSuggestions)
 router.get('/', getGeneralRoutes) // Public
 router.post('/', verifyJWT, createRoute)
 router.get('/:id', getRoute) // Public
