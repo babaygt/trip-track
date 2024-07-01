@@ -1,23 +1,39 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { useLazyGetSuggestionsQuery } from '../../features/routes/routesApiSlice'
+import useDebounce from '../../hooks/useDebounce'
 import { InputBox } from '../common/InputBox'
 
 const Autocomplete = ({ onSelect, placeholder }) => {
 	const [value, setValue] = useState('')
 	const [suggestions, setSuggestions] = useState([])
 	const [trigger] = useLazyGetSuggestionsQuery()
+	const debouncedValue = useDebounce(value, 350)
+	const selectedRef = useRef(false)
 
-	const fetchSuggestions = async (value) => {
-		const { data } = await trigger(value)
-		if (data) {
-			setSuggestions(data)
+	const fetchSuggestions = useCallback(
+		async (value) => {
+			const { data } = await trigger(value)
+			if (data) {
+				setSuggestions(data)
+			}
+		},
+		[trigger]
+	)
+
+	useEffect(() => {
+		if (selectedRef.current) {
+			selectedRef.current = false
+			return
 		}
-	}
+		if (debouncedValue) {
+			fetchSuggestions(debouncedValue)
+		} else {
+			setSuggestions([])
+		}
+	}, [debouncedValue, fetchSuggestions])
 
 	const handleChange = (e) => {
-		const newValue = e.target.value
-		setValue(newValue)
-		fetchSuggestions(newValue)
+		setValue(e.target.value)
 	}
 
 	const handleSelect = (suggestion) => {
@@ -25,6 +41,7 @@ const Autocomplete = ({ onSelect, placeholder }) => {
 		onSelect(location)
 		setValue(suggestion.display_name)
 		setSuggestions([])
+		selectedRef.current = true
 	}
 
 	return (
