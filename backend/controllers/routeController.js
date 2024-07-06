@@ -5,10 +5,25 @@ const axios = require('axios')
 
 // Create a new route
 const createRoute = asyncHandler(async (req, res) => {
-	const { startPoint, endPoint, waypoints, vehicleType, description } = req.body
+	const {
+		startPoint,
+		endPoint,
+		waypoints,
+		vehicleType,
+		description,
+		totalDistance,
+		totalTime,
+	} = req.body
 
 	// Confirm data
-	if (!startPoint || !endPoint || !waypoints || !vehicleType) {
+	if (
+		!startPoint ||
+		!endPoint ||
+		!waypoints ||
+		!vehicleType ||
+		totalDistance == null ||
+		totalTime == null
+	) {
 		return res
 			.status(400)
 			.json({ message: 'Please fill in all required fields' })
@@ -21,6 +36,8 @@ const createRoute = asyncHandler(async (req, res) => {
 		waypoints,
 		vehicleType,
 		description,
+		totalDistance,
+		totalTime,
 	})
 
 	if (route) {

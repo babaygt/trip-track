@@ -17,6 +17,8 @@ const routeSchema = new mongoose.Schema(
 		waypoints: [pointSchema],
 		vehicleType: { type: String, required: true },
 		description: { type: String },
+		totalDistance: { type: Number },
+		totalTime: { type: Number },
 		likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 		comments: [
 			{
