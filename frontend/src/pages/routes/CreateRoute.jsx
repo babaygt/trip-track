@@ -19,6 +19,8 @@ const CreateRoute = () => {
 	const [description, setDescription] = useState('')
 	const [showInstructions, setShowInstructions] = useState(true)
 	const [showInstructionButton, setShowInstructionButton] = useState(false)
+	const [totalDistance, setTotalDistance] = useState(0)
+	const [totalTime, setTotalTime] = useState(0)
 	const [createRoute, { isLoading, isSuccess, isError, error }] =
 		useCreateRouteMutation()
 
@@ -32,9 +34,20 @@ const CreateRoute = () => {
 			waypoints,
 			vehicleType,
 			description,
+			totalDistance,
+			totalTime,
 		}
 		await createRoute(newRoute).unwrap()
-	}, [startPoint, endPoint, waypoints, vehicleType, description, createRoute])
+	}, [
+		startPoint,
+		endPoint,
+		waypoints,
+		vehicleType,
+		description,
+		totalDistance,
+		totalTime,
+		createRoute,
+	])
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -162,6 +175,8 @@ const CreateRoute = () => {
 					zoom={zoom}
 					showInstructions={showInstructions}
 					setShowInstructionButton={setShowInstructionButton}
+					setTotalDistance={setTotalDistance}
+					setTotalTime={setTotalTime}
 				/>
 			</div>
 		</div>

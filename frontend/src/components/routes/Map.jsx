@@ -19,6 +19,10 @@ const Map = ({
 	zoom,
 	showInstructions,
 	setShowInstructionButton,
+	setTotalDistance,
+	setTotalTime,
+	draggableWaypoints = true,
+	routeWhileDragging = true,
 }) => {
 	const memoizedRouting = useMemo(
 		() =>
@@ -30,6 +34,10 @@ const Map = ({
 					waypoints={waypoints.filter(Boolean)}
 					showInstructions={showInstructions}
 					setShowInstructionButton={setShowInstructionButton}
+					setTotalDistance={setTotalDistance}
+					setTotalTime={setTotalTime}
+					draggableWaypoints={draggableWaypoints}
+					routeWhileDragging={routeWhileDragging}
 				/>
 			),
 		[
@@ -38,6 +46,10 @@ const Map = ({
 			waypoints,
 			showInstructions,
 			setShowInstructionButton,
+			setTotalDistance,
+			setTotalTime,
+			draggableWaypoints,
+			routeWhileDragging,
 		]
 	)
 

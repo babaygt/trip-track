@@ -13,8 +13,15 @@ export const routesApiSlice = baseApiSlice.injectEndpoints({
 		getSuggestions: builder.query({
 			query: (query) => `/routes/suggestions?q=${query}`,
 		}),
+		getRoutes: builder.query({
+			query: () => '/routes',
+			providesTags: ['Routes'],
+		}),
 	}),
 })
 
-export const { useCreateRouteMutation, useLazyGetSuggestionsQuery } =
-	routesApiSlice
+export const {
+	useCreateRouteMutation,
+	useLazyGetSuggestionsQuery,
+	useGetRoutesQuery,
+} = routesApiSlice

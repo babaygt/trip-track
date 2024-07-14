@@ -170,7 +170,7 @@ const getFollowedRoutes = asyncHandler(async (req, res) => {
 // Get general routes
 const getGeneralRoutes = asyncHandler(async (req, res) => {
 	const routes = await Route.find({})
-		.sort({ likes: -1 })
+		.sort({ createdAt: -1 })
 		.populate('creator', 'name username profilePicture')
 	return res.json(routes)
 })

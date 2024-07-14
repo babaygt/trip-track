@@ -10,6 +10,10 @@ const Routing = ({
 	waypoints,
 	showInstructions,
 	setShowInstructionButton,
+	setTotalDistance,
+	setTotalTime,
+	draggableWaypoints,
+	routeWhileDragging,
 }) => {
 	const map = useMap()
 	const [routingControl, setRoutingControl] = useState(null)
@@ -33,10 +37,10 @@ const Routing = ({
 				],
 			},
 			addWaypoints: true,
-			draggableWaypoints: true,
+			draggableWaypoints: draggableWaypoints,
 			fitSelectedRoutes: true,
-			showAlternatives: true,
-			routeWhileDragging: true,
+			showAlternatives: false,
+			routeWhileDragging: routeWhileDragging,
 			altLineOptions: {
 				styles: [
 					{
@@ -48,14 +52,31 @@ const Routing = ({
 			},
 		}).addTo(map)
 
-		control.on('routesfound', function () {
+		control.on('routesfound', function (e) {
 			setShowInstructionButton(true)
+			const routes = e.routes
+			const summary = routes[0].summary
+			const totalDistance = summary.totalDistance
+			const totalTime = summary.totalTime
+
+			setTotalDistance(totalDistance)
+			setTotalTime(totalTime)
 		})
 
 		setRoutingControl(control)
 
 		return () => map.removeControl(control)
-	}, [map, startPoint, endPoint, waypoints, setShowInstructionButton])
+	}, [
+		map,
+		startPoint,
+		endPoint,
+		waypoints,
+		setShowInstructionButton,
+		setTotalDistance,
+		setTotalTime,
+		draggableWaypoints,
+		routeWhileDragging,
+	])
 
 	useEffect(() => {
 		if (routingControl) {

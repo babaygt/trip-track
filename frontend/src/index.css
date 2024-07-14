@@ -656,6 +656,122 @@ input:disabled ~ .inputBox-icon {
 	background: var(--color-neutral-300);
 }
 
+/* Route Post Card */
+.route-card {
+	border: 1px solid var(--color-neutral-300);
+	border-radius: var(--size-500);
+	padding: var(--size-400);
+	margin-bottom: var(--size-400);
+	background: var(--color-neutral-100);
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.route-card-header {
+	display: flex;
+	align-items: center;
+	margin-bottom: var(--size-400);
+}
+
+.route-card-profile-picture {
+	border-radius: 50%;
+	width: var(--size-700);
+	height: var(--size-700);
+	margin-right: var(--size-400);
+}
+
+.route-card-title {
+	margin: 0;
+	font-size: var(--font-size-600);
+	color: var(--color-neutral-900);
+}
+
+.route-card-subtitle {
+	margin: 0;
+	font-size: var(--font-size-400);
+	color: var(--color-neutral-600);
+}
+
+.route-card-details {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100%;
+}
+
+.route-card-details-box {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+	background-color: var(--color-neutral-300);
+	padding: var(--size-200);
+	margin-bottom: var(--size-200);
+	gap: var(--size-200);
+	border: 1px solid var(--color-neutral-400);
+	border-radius: var(--size-500);
+	text-wrap: nowrap;
+}
+
+.route-card-details-key {
+	margin: 0;
+	font-size: var(--font-size-500);
+	color: var(--color-neutral-700);
+}
+
+.route-card-details-value {
+	margin-top: 0;
+	margin-bottom: var(--size-200);
+	font-weight: var(--font-weight-bold);
+	font-size: var(--font-size-600);
+	color: var(--color-neutral-900);
+}
+
+.route-card-description {
+	font-size: var(--font-size-500);
+	margin: var(--size-400) 0;
+	color: var(--color-neutral-800);
+}
+
+.route-card-actions {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: var(--size-400);
+	margin-inline: var(--size-400);
+}
+
+.route-card-actions i {
+	cursor: pointer;
+	font-size: var(--font-size-650);
+	color: var(--color-neutral-700);
+	transition: color 0.3s;
+}
+
+.route-card-actions i:hover {
+	color: var(--color-primary-700);
+}
+
+.route-card-map-container {
+	height: 100%;
+	width: 100%;
+	border-radius: var(--size-500);
+}
+
+.route-card-map-main {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 20rem;
+	gap: var(--size-400);
+}
+
+/* Feed */
+.feed-container {
+	padding: var(--size-400);
+	max-width: 50rem;
+	margin: 0 auto;
+}
+
 /* Utility classes */
 
 .container {
