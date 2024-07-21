@@ -732,7 +732,7 @@ input:disabled ~ .inputBox-icon {
 	color: var(--color-neutral-800);
 }
 
-.route-card__actions {
+.route-card-actions {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -740,7 +740,7 @@ input:disabled ~ .inputBox-icon {
 	margin-inline: var(--size-400);
 }
 
-.route-card__actions-box {
+.route-card-actions-box {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -749,7 +749,7 @@ input:disabled ~ .inputBox-icon {
 	transition: color 0.3s;
 }
 
-.route-card__actions-logo {
+.route-card-actions-logo {
 	cursor: pointer;
 	font-size: var(--font-size-650);
 	color: inherit;
@@ -759,22 +759,22 @@ input:disabled ~ .inputBox-icon {
 	justify-content: center;
 }
 
-.route-card__actions-logo i {
+.route-card-actions-logo i {
 	line-height: 1; /* Ensure line-height doesn't affect alignment */
 }
 
-.route-card__actions-logo:hover {
+.route-card-actions-logo:hover {
 	color: var(--color-primary-700);
 }
 
-.route-card__actions-count {
+.route-card-actions-count {
 	font-size: var(--font-size-500);
 	display: flex;
 	align-items: center;
 	color: inherit;
 }
 
-.route-card__actions-box--liked {
+.route-card-actions-box--liked {
 	color: var(--color-primary-700);
 }
 

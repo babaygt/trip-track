@@ -26,26 +26,26 @@ const RouteCardActions = ({ routeId, initialLikes, isInitiallyLiked }) => {
 	}
 
 	return (
-		<div className='route-card__actions'>
+		<div className='route-card-actions'>
 			<div
-				className={`route-card__actions-box ${
-					liked ? 'route-card__actions-box--liked' : ''
+				className={`route-card-actions-box ${
+					liked ? 'route-card-actions-box--liked' : ''
 				}`}
 			>
-				<span className='route-card__actions-logo'>
+				<span className='route-card-actions-logo'>
 					<i className='fi fi-rr-social-network' onClick={handleLike}></i>
 				</span>
-				<span className='route-card__actions-count'>{likesCount}</span>
+				<span className='route-card-actions-count'>{likesCount}</span>
 			</div>
 
-			<span className='route-card__actions-logo'>
+			<span className='route-card-actions-logo'>
 				<i className='fi fi-rr-comment-dots'></i>
 			</span>
-			<span className='route-card__actions-logo'>
+			<span className='route-card-actions-logo'>
 				<i className='fi fi-rr-share'></i>
 			</span>
 
-			<span className='route-card__actions-logo'>
+			<span className='route-card-actions-logo'>
 				<i className='fi fi-rr-bookmark'></i>
 			</span>
 		</div>
