@@ -732,7 +732,7 @@ input:disabled ~ .inputBox-icon {
 	color: var(--color-neutral-800);
 }
 
-.route-card-actions {
+.route-card__actions {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -740,14 +740,41 @@ input:disabled ~ .inputBox-icon {
 	margin-inline: var(--size-400);
 }
 
-.route-card-actions i {
-	cursor: pointer;
-	font-size: var(--font-size-650);
+.route-card__actions-box {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--size-200);
 	color: var(--color-neutral-700);
 	transition: color 0.3s;
 }
 
-.route-card-actions i:hover {
+.route-card__actions-logo {
+	cursor: pointer;
+	font-size: var(--font-size-650);
+	color: inherit;
+	transition: color 0.3s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.route-card__actions-logo i {
+	line-height: 1; /* Ensure line-height doesn't affect alignment */
+}
+
+.route-card__actions-logo:hover {
+	color: var(--color-primary-700);
+}
+
+.route-card__actions-count {
+	font-size: var(--font-size-500);
+	display: flex;
+	align-items: center;
+	color: inherit;
+}
+
+.route-card__actions-box--liked {
 	color: var(--color-primary-700);
 }
 
@@ -786,4 +813,8 @@ input:disabled ~ .inputBox-icon {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+.color-primary-900 {
+	color: var(--color-primary-900);
 }

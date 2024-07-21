@@ -3,8 +3,12 @@ import RouteCardDetails from './RouteCardDetails'
 import RouteCardActions from './RouteCardActions'
 import RouteCardDescription from './RouteCardDescription'
 import RouteCardMap from './RouteCardMap'
+import useAuth from '../../../hooks/useAuth'
 
 const RoutePostCard = ({ route }) => {
+	const { id: userId } = useAuth()
+	const isInitiallyLiked = route.likes.includes(userId) // Check if current user has liked the route
+
 	return (
 		<div className='route-card'>
 			<RouteCardHeader
@@ -25,7 +29,11 @@ const RoutePostCard = ({ route }) => {
 				/>
 			</div>
 			<RouteCardDescription description={route.description} />
-			<RouteCardActions />
+			<RouteCardActions
+				routeId={route._id}
+				initialLikes={route.likes.length}
+				isInitiallyLiked={isInitiallyLiked}
+			/>
 		</div>
 	)
 }

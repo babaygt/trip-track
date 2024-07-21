@@ -17,6 +17,14 @@ export const routesApiSlice = baseApiSlice.injectEndpoints({
 			query: () => '/routes',
 			providesTags: ['Routes'],
 		}),
+		likeRoute: builder.mutation({
+			query: ({ routeId, like }) => ({
+				url: `/routes/like/${routeId}`,
+				method: 'PUT',
+				body: { like },
+			}),
+			invalidatesTags: ['Routes'],
+		}),
 	}),
 })
 
@@ -24,4 +32,5 @@ export const {
 	useCreateRouteMutation,
 	useLazyGetSuggestionsQuery,
 	useGetRoutesQuery,
+	useLikeRouteMutation,
 } = routesApiSlice
