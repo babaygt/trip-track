@@ -25,6 +25,20 @@ export const routesApiSlice = baseApiSlice.injectEndpoints({
 			}),
 			invalidatesTags: ['Routes'],
 		}),
+		bookmarkRoute: builder.mutation({
+			query: ({ routeId }) => ({
+				url: `/users/bookmark/${routeId}`,
+				method: 'PUT',
+			}),
+			invalidatesTags: ['Routes', 'User'],
+		}),
+		unbookmarkRoute: builder.mutation({
+			query: ({ routeId }) => ({
+				url: `/users/unbookmark/${routeId}`,
+				method: 'PUT',
+			}),
+			invalidatesTags: ['Routes', 'User'],
+		}),
 	}),
 })
 
@@ -33,4 +47,6 @@ export const {
 	useLazyGetSuggestionsQuery,
 	useGetRoutesQuery,
 	useLikeRouteMutation,
+	useBookmarkRouteMutation,
+	useUnbookmarkRouteMutation,
 } = routesApiSlice
