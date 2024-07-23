@@ -1,4 +1,5 @@
 import { baseApiSlice } from '../../api/baseApiSlice'
+import { setUser } from './userSlice'
 
 export const usersApiSlice = baseApiSlice.injectEndpoints({
 	endpoints: (builder) => ({
@@ -9,7 +10,19 @@ export const usersApiSlice = baseApiSlice.injectEndpoints({
 				body: credentials,
 			}),
 		}),
+		getCurrentUser: builder.query({
+			query: () => 'users/current',
+			providesTags: ['User'],
+			async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+				try {
+					const { data } = await queryFulfilled
+					dispatch(setUser(data)) // Dispatch Redux action to update user state
+				} catch (error) {
+					console.error('Failed to fetch current user:', error)
+				}
+			},
+		}),
 	}),
 })
 
-export const { useRegisterMutation } = usersApiSlice
+export const { useRegisterMutation, useGetCurrentUserQuery } = usersApiSlice
