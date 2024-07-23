@@ -278,6 +278,19 @@ const secureProfile = asyncHandler(async (req, res) => {
 	}
 })
 
+const getCurrentUser = asyncHandler(async (req, res) => {
+	const user = await User.findById(req.user.id)
+		.select('-password')
+		.lean()
+		.exec() // Select all fields except password
+
+	if (user) {
+		return res.status(200).json(user)
+	} else {
+		return res.status(404).json({ message: 'User not found' })
+	}
+})
+
 module.exports = {
 	registerUser,
 	getUserProfile,
@@ -290,4 +303,5 @@ module.exports = {
 	unbookmarkRoute,
 	getBookmarks,
 	secureProfile,
+	getCurrentUser,
 }
