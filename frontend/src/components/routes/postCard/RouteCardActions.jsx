@@ -1,9 +1,22 @@
 import { useState, useEffect } from 'react'
-import { useLikeRouteMutation } from '../../../features/routes/routesApiSlice'
+import {
+	useLikeRouteMutation,
+	useBookmarkRouteMutation,
+	useUnbookmarkRouteMutation,
+} from '../../../features/routes/routesApiSlice'
 
-const RouteCardActions = ({ routeId, initialLikes, isInitiallyLiked }) => {
+const RouteCardActions = ({
+	routeId,
+	initialLikes,
+	isInitiallyLiked,
+	isInitiallyBookmarked,
+}) => {
 	const [likeRoute] = useLikeRouteMutation()
+	const [bookmarkRoute] = useBookmarkRouteMutation()
+	const [unbookmarkRoute] = useUnbookmarkRouteMutation()
+
 	const [liked, setLiked] = useState(isInitiallyLiked)
+	const [bookmarked, setBookmarked] = useState(isInitiallyBookmarked)
 	const [likesCount, setLikesCount] = useState(initialLikes)
 
 	useEffect(() => {
@@ -25,6 +38,20 @@ const RouteCardActions = ({ routeId, initialLikes, isInitiallyLiked }) => {
 		}
 	}
 
+	const handleBookmark = async () => {
+		setBookmarked(!bookmarked)
+		try {
+			if (!bookmarked) {
+				await bookmarkRoute({ routeId }).unwrap()
+			} else {
+				await unbookmarkRoute({ routeId }).unwrap()
+			}
+		} catch (error) {
+			console.error('Failed to toggle bookmark:', error)
+			setBookmarked(bookmarked) // Revert if failed
+		}
+	}
+
 	return (
 		<div className='route-card-actions'>
 			<div
@@ -33,7 +60,12 @@ const RouteCardActions = ({ routeId, initialLikes, isInitiallyLiked }) => {
 				}`}
 			>
 				<span className='route-card-actions-logo'>
-					<i className='fi fi-rr-social-network' onClick={handleLike}></i>
+					<i
+						className={`fi ${
+							liked ? 'fi-sr-thumbs-up' : 'fi-rr-social-network'
+						} `}
+						onClick={handleLike}
+					></i>
 				</span>
 				<span className='route-card-actions-count'>{likesCount}</span>
 			</div>
@@ -45,8 +77,15 @@ const RouteCardActions = ({ routeId, initialLikes, isInitiallyLiked }) => {
 				<i className='fi fi-rr-share'></i>
 			</span>
 
-			<span className='route-card-actions-logo'>
-				<i className='fi fi-rr-bookmark'></i>
+			<span
+				className={`route-card-actions-logo ${
+					bookmarked ? 'route-card-actions-box--bookmarked' : ''
+				}`}
+				onClick={handleBookmark}
+			>
+				<i
+					className={`fi ${bookmarked ? 'fi-sr-bookmark' : 'fi-rr-bookmark'} `}
+				></i>
 			</span>
 		</div>
 	)

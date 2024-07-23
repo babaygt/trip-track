@@ -4,10 +4,17 @@ import RouteCardActions from './RouteCardActions'
 import RouteCardDescription from './RouteCardDescription'
 import RouteCardMap from './RouteCardMap'
 import useAuth from '../../../hooks/useAuth'
+import { useSelector } from 'react-redux'
+import { selectCurrentUser } from '../../../features/users/userSlice'
 
 const RoutePostCard = ({ route }) => {
 	const { id: userId } = useAuth()
-	const isInitiallyLiked = route.likes.includes(userId) // Check if current user has liked the route
+	const currentUser = useSelector(selectCurrentUser)
+
+	// Ensuring currentUser is not null before accessing properties
+	const isInitiallyLiked = currentUser && route.likes.includes(userId)
+	const isInitiallyBookmarked =
+		currentUser && currentUser.bookmarks.includes(route._id)
 
 	return (
 		<div className='route-card'>
@@ -33,6 +40,7 @@ const RoutePostCard = ({ route }) => {
 				routeId={route._id}
 				initialLikes={route.likes.length}
 				isInitiallyLiked={isInitiallyLiked}
+				isInitiallyBookmarked={isInitiallyBookmarked}
 			/>
 		</div>
 	)

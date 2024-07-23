@@ -778,6 +778,16 @@ input:disabled ~ .inputBox-icon {
 	color: var(--color-primary-700);
 }
 
+.route-card-actions-box--bookmarked {
+	color: var(--color-primary-700);
+}
+
+.route-card-actions-box--liked:hover,
+.route-card-actions-box--liked span:hover,
+.route-card-actions-box--bookmarked:hover {
+	color: var(--color-neutral-700); /* Change this color as desired */
+}
+
 .route-card-map-container {
 	height: 100%;
 	width: 100%;
