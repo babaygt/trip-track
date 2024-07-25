@@ -5,7 +5,16 @@ import ClipLoader from 'react-spinners/ClipLoader'
 import RoutePostCard from '../../components/routes/postCard/RoutePostCard'
 
 export const Feed = () => {
-	const { data: routes, isLoading, isError, error } = useGetRoutesQuery()
+	const {
+		data: routes,
+		isLoading,
+		isError,
+		error,
+	} = useGetRoutesQuery({
+		pollingInterval: 60000,
+		refetchOnFocus: true,
+		refetchOnMountOrArgChange: true,
+	})
 	const [displayedRoutes, setDisplayedRoutes] = useState([])
 	const [showLoadMore, setShowLoadMore] = useState(true)
 

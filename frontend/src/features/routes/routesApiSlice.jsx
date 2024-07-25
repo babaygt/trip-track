@@ -17,6 +17,10 @@ export const routesApiSlice = baseApiSlice.injectEndpoints({
 			query: () => '/routes',
 			providesTags: ['Routes'],
 		}),
+		getRoute: builder.query({
+			query: (id) => `/routes/${id}`,
+			providesTags: ['Routes'],
+		}),
 		likeRoute: builder.mutation({
 			query: ({ routeId, like }) => ({
 				url: `/routes/like/${routeId}`,
@@ -39,6 +43,14 @@ export const routesApiSlice = baseApiSlice.injectEndpoints({
 			}),
 			invalidatesTags: ['Routes', 'User'],
 		}),
+		commentOnRoute: builder.mutation({
+			query: ({ routeId, text }) => ({
+				url: `/routes/comment/${routeId}`,
+				method: 'POST',
+				body: { text },
+			}),
+			invalidatesTags: ['Routes'],
+		}),
 	}),
 })
 
@@ -46,7 +58,9 @@ export const {
 	useCreateRouteMutation,
 	useLazyGetSuggestionsQuery,
 	useGetRoutesQuery,
+	useGetRouteQuery,
 	useLikeRouteMutation,
 	useBookmarkRouteMutation,
 	useUnbookmarkRouteMutation,
+	useCommentOnRouteMutation,
 } = routesApiSlice

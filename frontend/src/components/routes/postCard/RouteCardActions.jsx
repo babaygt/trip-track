@@ -4,12 +4,17 @@ import {
 	useBookmarkRouteMutation,
 	useUnbookmarkRouteMutation,
 } from '../../../features/routes/routesApiSlice'
+import { toast } from 'react-hot-toast'
 
 const RouteCardActions = ({
 	routeId,
 	initialLikes,
 	isInitiallyLiked,
 	isInitiallyBookmarked,
+	commentBoxOpen,
+	setCommentBoxOpen,
+	currentUser,
+	totalCommentsLength,
 }) => {
 	const [likeRoute] = useLikeRouteMutation()
 	const [bookmarkRoute] = useBookmarkRouteMutation()
@@ -25,6 +30,11 @@ const RouteCardActions = ({
 	}, [initialLikes, isInitiallyLiked])
 
 	const handleLike = async () => {
+		if (!currentUser) {
+			toast.error('You must be logged in to like a route.')
+			return
+		}
+
 		setLiked(!liked)
 		setLikesCount(liked ? likesCount - 1 : likesCount + 1)
 
@@ -39,6 +49,11 @@ const RouteCardActions = ({
 	}
 
 	const handleBookmark = async () => {
+		if (!currentUser) {
+			toast.error('You must be logged in to bookmark a route.')
+			return
+		}
+
 		setBookmarked(!bookmarked)
 		try {
 			if (!bookmarked) {
@@ -50,6 +65,15 @@ const RouteCardActions = ({
 			console.error('Failed to toggle bookmark:', error)
 			setBookmarked(bookmarked) // Revert if failed
 		}
+	}
+
+	const handleCommentBox = () => {
+		if (!currentUser) {
+			toast.error('You must be logged in to comment on a route.')
+			return
+		}
+
+		setCommentBoxOpen(!commentBoxOpen)
 	}
 
 	return (
@@ -70,9 +94,18 @@ const RouteCardActions = ({
 				<span className='route-card-actions-count'>{likesCount}</span>
 			</div>
 
-			<span className='route-card-actions-logo'>
-				<i className='fi fi-rr-comment-dots'></i>
-			</span>
+			<div
+				className={`route-card-actions-box  ${
+					commentBoxOpen ? 'color-primary-700 ' : ''
+				}`}
+			>
+				<span className={`route-card-actions-logo`} onClick={handleCommentBox}>
+					<i className='fi fi-rr-comment-dots'></i>
+				</span>
+
+				<span className='route-card-actions-count'>{totalCommentsLength}</span>
+			</div>
+
 			<span className='route-card-actions-logo'>
 				<i className='fi fi-rr-share'></i>
 			</span>

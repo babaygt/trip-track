@@ -413,8 +413,9 @@ input:disabled ~ .inputBox-icon {
 	text-transform: uppercase;
 	cursor: pointer;
 	transition: background-color 0.3s ease;
-	border: none; /* Move this to the base button class */
+	border: none;
 	color: white;
+	text-decoration: none; /* Ensure link buttons don't have underline */
 }
 
 .button:disabled {
@@ -749,6 +750,10 @@ input:disabled ~ .inputBox-icon {
 	transition: color 0.3s;
 }
 
+.route-card-actions-box:hover {
+	color: var(--color-primary-700);
+}
+
 .route-card-actions-logo {
 	cursor: pointer;
 	font-size: var(--font-size-650);
@@ -809,6 +814,104 @@ input:disabled ~ .inputBox-icon {
 	margin: 0 auto;
 }
 
+.single-route-post {
+	padding: var(--size-400);
+	max-width: 50rem;
+	margin: 0 auto;
+}
+
+.comment-section {
+	margin-top: var(--size-600);
+	background-color: var(--color-neutral-100);
+}
+
+.comment-card {
+	display: flex;
+	align-items: center;
+	gap: var(--size-300);
+}
+
+.comment-card-user-picture {
+	border-radius: 50%;
+	width: var(--size-700);
+	height: var(--size-700);
+	margin-right: var(--size-200);
+}
+
+.comment-card-header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--size-300);
+	margin-bottom: var(--size-100);
+}
+
+.comment-card-username {
+	margin-bottom: var(--size-400);
+	color: var(--color-primary-700);
+	font-size: var(--font-size-600);
+}
+
+.comment-card-date {
+	margin: 0;
+	font-size: var(--font-size-400);
+	color: var(--color-neutral-600);
+}
+
+.comment-card-text {
+	font-size: var(--font-size-500);
+	color: var(--color-neutral-900);
+}
+
+.comment-section ul {
+	list-style: none;
+	padding: 0;
+	margin: var(--size-400) 0;
+}
+
+.comment-section li {
+	margin-bottom: var(--size-300);
+	padding: var(--size-300);
+	background-color: var(--color-neutral-200);
+	border-radius: var(--size-300);
+	border: 1px solid var(--color-neutral-300);
+}
+
+.comment-section li p {
+	margin: 0;
+}
+
+.comment-section form {
+	margin-top: var(--size-400);
+}
+
+.comment-section-button {
+	padding: var(--size-200) var(--size-400);
+	font-size: var(--font-size-nav);
+	background-color: var(--color-primary-500);
+	margin-top: var(--size-300);
+	margin-bottom: var(--size-300);
+	text-align: center;
+	text-transform: none;
+}
+
+.comment-section-button:hover,
+.comment-section-button:focus {
+	background-color: var(--color-primary-700);
+}
+
+.comment-section-text {
+	text-align: center;
+	text-decoration: none;
+	color: var(--color-primary-700);
+	font-weight: var(--font-weight-semi-bold);
+	padding: var(--size-300);
+}
+
+.comment-section-text:hover {
+	color: var(--color-primary-800);
+}
+
 /* Utility classes */
 
 .container {
@@ -825,6 +928,22 @@ input:disabled ~ .inputBox-icon {
 	margin-right: auto;
 }
 
-.color-primary-900 {
-	color: var(--color-primary-900);
+.color-primary-700 {
+	color: var(--color-primary-700);
+}
+
+.error-404-text {
+	font-size: var(--font-size-800);
+	font-weight: var(--font-weight-bold);
+	text-align: center;
+	color: red;
+}
+
+.error-404-link {
+	color: var(--color-primary-500);
+	transition: color 0.3s;
+}
+
+.error-404-link:hover {
+	color: var(--color-primary-800);
 }

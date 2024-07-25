@@ -22,7 +22,16 @@ export const usersApiSlice = baseApiSlice.injectEndpoints({
 				}
 			},
 		}),
+
+		getUserProfile: builder.query({
+			query: (id) => `users/profile/${id}`,
+			providesTags: ['User'],
+		}),
 	}),
 })
 
-export const { useRegisterMutation, useGetCurrentUserQuery } = usersApiSlice
+export const {
+	useRegisterMutation,
+	useGetCurrentUserQuery,
+	useGetUserProfileQuery,
+} = usersApiSlice
