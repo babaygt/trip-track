@@ -27,6 +27,11 @@ export const usersApiSlice = baseApiSlice.injectEndpoints({
 			query: (id) => `users/profile/${id}`,
 			providesTags: ['User'],
 		}),
+
+		getUserRoutes: builder.query({
+			query: (id) => `users/${id}/routes`,
+			providesTags: ['Routes'],
+		}),
 	}),
 })
 
@@ -34,4 +39,5 @@ export const {
 	useRegisterMutation,
 	useGetCurrentUserQuery,
 	useGetUserProfileQuery,
+	useGetUserRoutesQuery,
 } = usersApiSlice

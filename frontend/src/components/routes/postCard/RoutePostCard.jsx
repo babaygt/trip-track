@@ -25,6 +25,8 @@ const RoutePostCard = ({ route }) => {
 				profilePicture={route.creator.profilePicture}
 				name={route.creator.name}
 				createdAt={route.createdAt}
+				creatorId={route.creator._id}
+				creatorUsername={route.creator.username}
 			/>
 			<div className='route-card-map-main'>
 				<RouteCardMap

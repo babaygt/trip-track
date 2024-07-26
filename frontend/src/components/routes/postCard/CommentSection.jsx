@@ -72,7 +72,11 @@ const CommentSection = ({ routeId, commentBoxOpen }) => {
 			) : null}
 
 			<ul>
-				{location.pathname === '/' && sortedComments?.length ? (
+				{location.pathname === `/route/${routeId}` ? (
+					sortedComments.map((comment) => (
+						<CommentItem key={comment._id} comment={comment} />
+					))
+				) : sortedComments?.length ? (
 					<>
 						{sortedComments.slice(0, 3).map((comment) => (
 							<CommentItem key={comment._id} comment={comment} />
@@ -84,11 +88,6 @@ const CommentSection = ({ routeId, commentBoxOpen }) => {
 							</Link>
 						)}
 					</>
-				) : // If location is /route/:id show all comments
-				location.pathname === `/route/${routeId}` ? (
-					sortedComments.map((comment) => (
-						<CommentItem key={comment._id} comment={comment} />
-					))
 				) : null}
 			</ul>
 		</div>

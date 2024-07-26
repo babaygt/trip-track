@@ -680,10 +680,22 @@ input:disabled ~ .inputBox-icon {
 	margin-right: var(--size-400);
 }
 
+.route-card-header-info {
+	display: flex;
+	align-items: center;
+	gap: var(--size-200);
+}
+
 .route-card-title {
 	margin: 0;
 	font-size: var(--font-size-600);
 	color: var(--color-neutral-900);
+}
+
+.route-card-username {
+	margin: 0;
+	font-size: var(--font-size-500);
+	color: var(--color-neutral-700);
 }
 
 .route-card-subtitle {
@@ -946,4 +958,61 @@ input:disabled ~ .inputBox-icon {
 
 .error-404-link:hover {
 	color: var(--color-primary-800);
+}
+
+/* User Profile */
+.user-profile {
+	padding: var(--size-400);
+	max-width: 50rem;
+	margin: 0 auto;
+}
+
+.user-profile-card {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: var(--size-100);
+	background-color: var(--color-neutral-100);
+	padding: var(--size-400);
+	border-radius: var(--size-500);
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.user-info {
+	display: flex;
+	align-items: center;
+	gap: var(--size-200);
+}
+
+.user-profile-picture {
+	border-radius: 50%;
+	width: var(--size-900);
+	height: var(--size-900);
+}
+
+.user-name {
+	margin: 0;
+	font-size: var(--font-size-600);
+	color: var(--color-neutral-900);
+}
+
+.user-username {
+	margin: 0;
+	font-size: var(--font-size-500);
+	color: var(--color-neutral-600);
+}
+
+.user-bio {
+	margin-top: var(--size-200);
+	font-size: var(--font-size-500);
+	color: var(--color-neutral-800);
+}
+
+.user-routes {
+	margin-top: var(--size-600);
+}
+
+.user-routes-username {
+	font-size: var(--font-size-600);
+	color: var(--color-neutral-900);
+	margin-bottom: var(--size-400);
 }

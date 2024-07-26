@@ -5,7 +5,8 @@ import { Feed } from './pages/feed/Feed'
 import MainLayout from './components/layout/MainLayout'
 import PersistLogin from './features/auth/PersistLogin'
 import CreateRoute from './pages/routes/CreateRoute'
-import SingleRoutePost from './pages/routes/SingleRoutePost' // Import the SingleRoutePost component
+import SingleRoutePost from './pages/routes/SingleRoutePost'
+import UserProfile from './pages/users/UserProfile'
 
 const routes = [
 	{
@@ -24,8 +25,12 @@ const routes = [
 						element: <CreateRoute />,
 					},
 					{
-						path: 'route/:id', // Define the path for the single route post
+						path: 'route/:id',
 						element: <SingleRoutePost />,
+					},
+					{
+						path: 'user/:id',
+						element: <UserProfile />,
 					},
 				],
 			},
