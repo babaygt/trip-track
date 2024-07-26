@@ -291,6 +291,21 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 	}
 })
 
+// Get routes created by a specific user
+const getUserRoutes = asyncHandler(async (req, res) => {
+	const userId = req.params.id
+	const routes = await Route.find({ creator: userId })
+		.populate('creator', 'name username profilePicture')
+		.sort({ createdAt: -1 })
+		.exec()
+
+	if (routes) {
+		return res.status(200).json(routes)
+	} else {
+		return res.status(404).json({ message: 'No routes found for this user' })
+	}
+})
+
 module.exports = {
 	registerUser,
 	getUserProfile,
@@ -304,4 +319,5 @@ module.exports = {
 	getBookmarks,
 	secureProfile,
 	getCurrentUser,
+	getUserRoutes,
 }

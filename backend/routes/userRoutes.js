@@ -13,6 +13,7 @@ const {
 	getBookmarks,
 	secureProfile,
 	getCurrentUser,
+	getUserRoutes,
 } = require('../controllers/userController')
 const verifyJWT = require('../middleware/verifyJWT')
 
@@ -28,5 +29,6 @@ router.put('/unbookmark/:routeId', verifyJWT, unbookmarkRoute)
 router.get('/bookmarks/:id', getBookmarks) // Public
 router.put('/secure', verifyJWT, secureProfile)
 router.get('/current', verifyJWT, getCurrentUser)
+router.get('/:id/routes', getUserRoutes) // Public
 
 module.exports = router
