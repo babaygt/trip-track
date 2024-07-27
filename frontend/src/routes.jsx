@@ -7,6 +7,8 @@ import PersistLogin from './features/auth/PersistLogin'
 import CreateRoute from './pages/routes/CreateRoute'
 import SingleRoutePost from './pages/routes/SingleRoutePost'
 import UserProfile from './pages/users/UserProfile'
+import EditProfile from './pages/users/EditProfile'
+import UpdatePassword from './pages/users/UpdatePassword'
 
 const routes = [
 	{
@@ -31,6 +33,14 @@ const routes = [
 					{
 						path: 'user/:id',
 						element: <UserProfile />,
+					},
+					{
+						path: 'edit-profile', // Define the path for the edit profile page
+						element: <EditProfile />,
+					},
+					{
+						path: 'update-password',
+						element: <UpdatePassword />, // Add the path for updating the password
 					},
 				],
 			},

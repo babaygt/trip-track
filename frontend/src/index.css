@@ -295,6 +295,14 @@ input:disabled ~ .inputBox-icon {
 	margin-top: var(--size-100);
 }
 
+.inputBox-label {
+	font-size: var(--font-size-500);
+	color: var(--color-neutral-900);
+	margin-bottom: var(--size-200);
+	font-weight: var(--font-weight-bold);
+	text-transform: capitalize;
+}
+
 /* Checkbox */
 
 .checkbox {
@@ -451,20 +459,44 @@ input:disabled ~ .inputBox-icon {
 	margin-bottom: var(--size-200);
 }
 
+.textarea-wrapper {
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+
 .textarea-input {
 	width: 100%;
 	border-radius: var(--size-500);
 	padding: var(--size-400);
+	padding-left: var(--size-700); /* Ensure this is enough space for the icon */
 	background-color: var(--color-neutral-200);
 	border: 1px solid var(--color-neutral-300);
 	transition: background-color 0.3s, border-color 0.3s;
 	resize: vertical; /* Allow vertical resizing */
+	box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
 }
 
 .textarea-input:focus {
 	background-color: transparent;
 	border-color: var(--color-primary-500);
 	outline: none;
+}
+
+.textarea-icon {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	pointer-events: none;
+}
+
+.textarea-label {
+	font-size: var(--font-size-500);
+	color: var(--color-neutral-900);
+	margin-bottom: var(--size-200);
+	font-weight: var(--font-weight-bold);
+	text-transform: capitalize;
 }
 
 /* Select */
@@ -924,6 +956,169 @@ input:disabled ~ .inputBox-icon {
 	color: var(--color-primary-800);
 }
 
+/* User Profile */
+.user-profile {
+	padding: var(--size-400);
+	max-width: 50rem;
+	margin: 0 auto;
+}
+
+.user-profile-card {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: var(--size-100);
+	background-color: var(--color-neutral-100);
+	padding: var(--size-400);
+	border-radius: var(--size-500);
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.user-profile-card-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--size-300);
+	margin-bottom: var(--size-400);
+}
+
+.user-info {
+	display: flex;
+	align-items: center;
+	gap: var(--size-200);
+}
+
+.user-profile-picture {
+	border-radius: 50%;
+	width: var(--size-900);
+	height: var(--size-900);
+}
+
+.user-name {
+	margin: 0;
+	font-size: var(--font-size-600);
+	color: var(--color-neutral-900);
+}
+
+.user-username {
+	margin: 0;
+	font-size: var(--font-size-500);
+	color: var(--color-neutral-600);
+}
+
+.user-profile-card-actions {
+	display: flex;
+	align-items: center;
+	gap: var(--size-300);
+}
+
+.user-profile-button,
+.user-profile-button-secondary {
+	padding: var(--size-200) var(--size-400);
+	font-size: var(--font-size-nav);
+	background-color: var(--color-primary-500);
+}
+
+.user-profile-button:hover,
+.user-profile-button:focus {
+	background-color: var(--color-primary-700);
+}
+
+.user-profile-button-secondary {
+	background-color: var(--color-neutral-700);
+}
+
+.user-profile-button-secondary:hover,
+.user-profile-button-secondary:focus {
+	background-color: var(--color-neutral-800);
+}
+
+.user-bio {
+	margin-top: var(--size-200);
+	font-size: var(--font-size-500);
+	color: var(--color-neutral-800);
+}
+
+.user-stats {
+	display: flex;
+	align-items: center;
+	margin-top: var(--size-400);
+	gap: var(--size-500);
+}
+
+.user-stat {
+	display: flex;
+	align-items: center;
+	gap: var(--size-100);
+}
+
+.user-stat-number {
+	font-size: var(--font-size-500);
+	color: var(--color-neutral-900);
+	font-weight: var(--font-weight-bold);
+}
+
+.user-stat-label {
+	font-size: var(--font-size-500);
+	color: var(--color-neutral-900);
+}
+
+.user-routes {
+	margin-top: var(--size-600);
+}
+
+.user-routes-username {
+	font-size: var(--font-size-600);
+	color: var(--color-neutral-900);
+	margin-bottom: var(--size-400);
+}
+
+/* Edit Profile */
+.edit-profile {
+	padding: var(--size-400);
+	max-width: 50rem;
+	margin: 0 auto;
+}
+
+.edit-profile-form {
+	background-color: var(--color-neutral-100);
+	border: 1px solid var(--color-neutral-300);
+	border-radius: var(--size-500);
+	padding: var(--size-400);
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.edit-profile-form h2 {
+	text-align: center;
+	margin-bottom: var(--size-400);
+	color: var(--color-primary-700);
+}
+
+.edit-profile-button:hover,
+.edit-profile-button:focus {
+	background-color: var(--color-primary-700);
+}
+
+/* Update Password */
+.update-password {
+	padding: var(--size-400);
+	max-width: 50rem;
+	margin: 0 auto;
+}
+
+.update-password-form {
+	background-color: var(--color-neutral-100);
+	border: 1px solid var(--color-neutral-300);
+	border-radius: var(--size-500);
+	padding: var(--size-400);
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.update-password-form h2 {
+	text-align: center;
+	margin-bottom: var(--size-400);
+	color: var(--color-primary-700);
+}
+
 /* Utility classes */
 
 .container {
@@ -958,61 +1153,4 @@ input:disabled ~ .inputBox-icon {
 
 .error-404-link:hover {
 	color: var(--color-primary-800);
-}
-
-/* User Profile */
-.user-profile {
-	padding: var(--size-400);
-	max-width: 50rem;
-	margin: 0 auto;
-}
-
-.user-profile-card {
-	display: flex;
-	flex-direction: column;
-	margin-bottom: var(--size-100);
-	background-color: var(--color-neutral-100);
-	padding: var(--size-400);
-	border-radius: var(--size-500);
-	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-}
-
-.user-info {
-	display: flex;
-	align-items: center;
-	gap: var(--size-200);
-}
-
-.user-profile-picture {
-	border-radius: 50%;
-	width: var(--size-900);
-	height: var(--size-900);
-}
-
-.user-name {
-	margin: 0;
-	font-size: var(--font-size-600);
-	color: var(--color-neutral-900);
-}
-
-.user-username {
-	margin: 0;
-	font-size: var(--font-size-500);
-	color: var(--color-neutral-600);
-}
-
-.user-bio {
-	margin-top: var(--size-200);
-	font-size: var(--font-size-500);
-	color: var(--color-neutral-800);
-}
-
-.user-routes {
-	margin-top: var(--size-600);
-}
-
-.user-routes-username {
-	font-size: var(--font-size-600);
-	color: var(--color-neutral-900);
-	margin-bottom: var(--size-400);
 }

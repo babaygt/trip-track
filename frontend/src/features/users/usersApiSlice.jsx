@@ -32,6 +32,22 @@ export const usersApiSlice = baseApiSlice.injectEndpoints({
 			query: (id) => `users/${id}/routes`,
 			providesTags: ['Routes'],
 		}),
+		updateUserProfile: builder.mutation({
+			query: (updatedUser) => ({
+				url: 'users/profile',
+				method: 'PUT',
+				body: updatedUser,
+			}),
+			invalidatesTags: ['User'],
+		}),
+		updateUserPassword: builder.mutation({
+			query: (passwords) => ({
+				url: 'users/profile/password',
+				method: 'PUT',
+				body: passwords,
+			}),
+			invalidatesTags: ['User'],
+		}),
 	}),
 })
 
@@ -40,4 +56,6 @@ export const {
 	useGetCurrentUserQuery,
 	useGetUserProfileQuery,
 	useGetUserRoutesQuery,
+	useUpdateUserProfileMutation,
+	useUpdateUserPasswordMutation,
 } = usersApiSlice
