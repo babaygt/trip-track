@@ -14,10 +14,17 @@ export const InputBox = ({
 	showValidation,
 	onFocus,
 	onBlur,
+	showLabel = false,
+	labelText,
 }) => {
 	const [passwordVisible, setPasswordVisible] = useState(false)
 	return (
 		<div className='inputBox'>
+			{showLabel && (
+				<label htmlFor={id} className='inputBox-label'>
+					{labelText ? labelText : name}
+				</label>
+			)}
 			<div className='inputBox-wrapper'>
 				<input
 					name={name}
