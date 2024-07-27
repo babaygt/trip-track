@@ -107,7 +107,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 	}
 })
 
-// Follow user
+// Follow a user
 const followUser = asyncHandler(async (req, res) => {
 	const currentUser = await User.findById(req.user.id)
 	const userToFollow = await User.findById(req.params.id)
@@ -120,27 +120,27 @@ const followUser = asyncHandler(async (req, res) => {
 		return res.status(400).json({ message: 'You cannot follow yourself' })
 	}
 
-	if (
-		currentUser.following.includes(userToFollow._id) &&
-		userToFollow.followers.includes(currentUser._id)
-	) {
+	if (currentUser.following.includes(userToFollow._id)) {
 		return res
 			.status(400)
 			.json({ message: 'You are already following this user' })
-	} else {
-		currentUser.following.push(userToFollow._id)
-		userToFollow.followers.push(currentUser._id)
-
-		await currentUser.save()
-		await userToFollow.save()
-
-		return res.status(200).json({
-			message: `You are now following ${userToFollow.username}`,
-		})
 	}
+
+	currentUser.following.push(userToFollow._id)
+	userToFollow.followers.push(currentUser._id)
+
+	await currentUser.save()
+	await userToFollow.save()
+
+	const updatedUser = await User.findById(req.user.id)
+		.select('-password')
+		.lean()
+		.exec()
+
+	return res.status(200).json(updatedUser) // Return the updated current user
 })
 
-// Unfollow user
+// Unfollow a user
 const unfollowUser = asyncHandler(async (req, res) => {
 	const currentUser = await User.findById(req.user.id)
 	const userToUnfollow = await User.findById(req.params.id)
@@ -153,27 +153,27 @@ const unfollowUser = asyncHandler(async (req, res) => {
 		return res.status(400).json({ message: 'You cannot unfollow yourself' })
 	}
 
-	if (
-		!currentUser.following.includes(userToUnfollow._id) &&
-		!userToUnfollow.followers.includes(currentUser._id)
-	) {
+	if (!currentUser.following.includes(userToUnfollow._id)) {
 		return res.status(400).json({ message: 'You are not following this user' })
-	} else {
-		currentUser.following = currentUser.following.filter(
-			(id) => id.toString() !== userToUnfollow._id.toString()
-		)
-
-		userToUnfollow.followers = userToUnfollow.followers.filter(
-			(id) => id.toString() !== currentUser._id.toString()
-		)
-
-		await currentUser.save()
-		await userToUnfollow.save()
-
-		return res.status(200).json({
-			message: `You have unfollowed ${userToUnfollow.username}`,
-		})
 	}
+
+	currentUser.following = currentUser.following.filter(
+		(id) => id.toString() !== userToUnfollow._id.toString()
+	)
+
+	userToUnfollow.followers = userToUnfollow.followers.filter(
+		(id) => id.toString() !== currentUser._id.toString()
+	)
+
+	await currentUser.save()
+	await userToUnfollow.save()
+
+	const updatedUser = await User.findById(req.user.id)
+		.select('-password')
+		.lean()
+		.exec()
+
+	return res.status(200).json(updatedUser) // Return the updated current user
 })
 
 // Get followers

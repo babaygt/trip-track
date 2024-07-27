@@ -22,12 +22,10 @@ export const usersApiSlice = baseApiSlice.injectEndpoints({
 				}
 			},
 		}),
-
 		getUserProfile: builder.query({
 			query: (id) => `users/profile/${id}`,
 			providesTags: ['User'],
 		}),
-
 		getUserRoutes: builder.query({
 			query: (id) => `users/${id}/routes`,
 			providesTags: ['Routes'],
@@ -48,6 +46,36 @@ export const usersApiSlice = baseApiSlice.injectEndpoints({
 			}),
 			invalidatesTags: ['User'],
 		}),
+		followUser: builder.mutation({
+			query: (id) => ({
+				url: `users/follow/${id}`,
+				method: 'PUT',
+			}),
+			invalidatesTags: ['User'],
+			async onQueryStarted(id, { dispatch, queryFulfilled }) {
+				try {
+					const { data } = await queryFulfilled
+					dispatch(setUser(data)) // Update the current user in Redux
+				} catch (error) {
+					console.error('Failed to follow user:', error)
+				}
+			},
+		}),
+		unfollowUser: builder.mutation({
+			query: (id) => ({
+				url: `users/unfollow/${id}`,
+				method: 'PUT',
+			}),
+			invalidatesTags: ['User'],
+			async onQueryStarted(id, { dispatch, queryFulfilled }) {
+				try {
+					const { data } = await queryFulfilled
+					dispatch(setUser(data)) // Update the current user in Redux
+				} catch (error) {
+					console.error('Failed to unfollow user:', error)
+				}
+			},
+		}),
 	}),
 })
 
@@ -58,4 +86,6 @@ export const {
 	useGetUserRoutesQuery,
 	useUpdateUserProfileMutation,
 	useUpdateUserPasswordMutation,
+	useFollowUserMutation,
+	useUnfollowUserMutation,
 } = usersApiSlice

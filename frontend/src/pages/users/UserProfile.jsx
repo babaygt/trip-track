@@ -2,21 +2,26 @@ import { useParams, Link } from 'react-router-dom'
 import {
 	useGetUserProfileQuery,
 	useGetUserRoutesQuery,
+	useFollowUserMutation,
+	useUnfollowUserMutation,
 } from '../../features/users/usersApiSlice'
 import ClipLoader from 'react-spinners/ClipLoader'
 import { Toaster, toast } from 'react-hot-toast'
 import RoutePostCard from '../../components/routes/postCard/RoutePostCard'
-import { useSelector } from 'react-redux'
-import { selectCurrentUser } from '../../features/users/userSlice'
+import { useSelector, useDispatch } from 'react-redux'
+import { selectCurrentUser, setUser } from '../../features/users/userSlice'
 
 const UserProfile = () => {
 	const { id } = useParams()
 	const currentUser = useSelector(selectCurrentUser)
+	const dispatch = useDispatch()
+
 	const {
 		data: user,
 		isLoading: isLoadingUser,
 		isError: isErrorUser,
 		error: errorUser,
+		refetch: refetchUser,
 	} = useGetUserProfileQuery(id)
 	const {
 		data: routes,
@@ -24,6 +29,31 @@ const UserProfile = () => {
 		isError: isErrorRoutes,
 		error: errorRoutes,
 	} = useGetUserRoutesQuery(id)
+
+	const [followUser] = useFollowUserMutation()
+	const [unfollowUser] = useUnfollowUserMutation()
+
+	const handleFollow = async () => {
+		try {
+			const updatedUser = await followUser(id).unwrap()
+			dispatch(setUser(updatedUser))
+			refetchUser()
+			toast.success('Followed successfully')
+		} catch (err) {
+			toast.error('Failed to follow user')
+		}
+	}
+
+	const handleUnfollow = async () => {
+		try {
+			const updatedUser = await unfollowUser(id).unwrap()
+			dispatch(setUser(updatedUser))
+			refetchUser()
+			toast.success('Unfollowed successfully')
+		} catch (err) {
+			toast.error('Failed to unfollow user')
+		}
+	}
 
 	if (isLoadingUser || isLoadingRoutes) {
 		return <ClipLoader color='#28af60' loading size={150} />
@@ -38,6 +68,9 @@ const UserProfile = () => {
 		toast.error(errorRoutes?.data?.message || 'Failed to load user routes')
 		return <p>Error loading user routes.</p>
 	}
+
+	const isFollowing =
+		currentUser && user.followers.includes(currentUser._id.toString())
 
 	return (
 		<div className='user-profile'>
@@ -57,7 +90,7 @@ const UserProfile = () => {
 							</div>
 						</div>
 						<div className='user-profile-card-actions'>
-							{currentUser && currentUser._id === user._id && (
+							{currentUser && currentUser._id === user._id ? (
 								<>
 									<Link
 										to='/edit-profile '
@@ -73,6 +106,17 @@ const UserProfile = () => {
 										Change Password
 									</Link>
 								</>
+							) : (
+								<button
+									className={`button  ${
+										isFollowing
+											? 'user-profile-button-unfollow'
+											: 'user-profile-button'
+									}`}
+									onClick={isFollowing ? handleUnfollow : handleFollow}
+								>
+									{isFollowing ? 'Unfollow' : 'Follow'}
+								</button>
 							)}
 						</div>
 					</div>

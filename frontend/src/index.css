@@ -1012,7 +1012,8 @@ input:disabled ~ .inputBox-icon {
 }
 
 .user-profile-button,
-.user-profile-button-secondary {
+.user-profile-button-secondary,
+.user-profile-button-unfollow {
 	padding: var(--size-200) var(--size-400);
 	font-size: var(--font-size-nav);
 	background-color: var(--color-primary-500);
@@ -1030,6 +1031,15 @@ input:disabled ~ .inputBox-icon {
 .user-profile-button-secondary:hover,
 .user-profile-button-secondary:focus {
 	background-color: var(--color-neutral-800);
+}
+
+.user-profile-button-unfollow {
+	background-color: var(--color-accent-500);
+}
+
+.user-profile-button-unfollow:hover,
+.user-profile-button-unfollow:focus {
+	background-color: var(--color-accent-700);
 }
 
 .user-bio {
