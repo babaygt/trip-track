@@ -306,6 +306,35 @@ const getUserRoutes = asyncHandler(async (req, res) => {
 	}
 })
 
+const updateUserPassword = asyncHandler(async (req, res) => {
+	const { oldPassword, newPassword } = req.body
+
+	if (!oldPassword || !newPassword) {
+		return res
+			.status(400)
+			.json({ message: 'Please provide both old and new passwords' })
+	}
+
+	const user = await User.findById(req.user.id)
+
+	if (!user) {
+		return res.status(404).json({ message: 'User not found' })
+	}
+
+	// Check if old password is correct
+	const isMatch = await bcrypt.compare(oldPassword, user.password)
+	if (!isMatch) {
+		return res.status(400).json({ message: 'Old password is incorrect' })
+	}
+
+	// Hash new password and update
+	user.password = await bcrypt.hash(newPassword, 10)
+
+	await user.save()
+
+	return res.status(200).json({ message: 'Password updated successfully' })
+})
+
 module.exports = {
 	registerUser,
 	getUserProfile,
@@ -320,4 +349,5 @@ module.exports = {
 	secureProfile,
 	getCurrentUser,
 	getUserRoutes,
+	updateUserPassword,
 }

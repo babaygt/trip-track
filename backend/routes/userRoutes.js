@@ -14,6 +14,7 @@ const {
 	secureProfile,
 	getCurrentUser,
 	getUserRoutes,
+	updateUserPassword,
 } = require('../controllers/userController')
 const verifyJWT = require('../middleware/verifyJWT')
 
@@ -30,5 +31,6 @@ router.get('/bookmarks/:id', getBookmarks) // Public
 router.put('/secure', verifyJWT, secureProfile)
 router.get('/current', verifyJWT, getCurrentUser)
 router.get('/:id/routes', getUserRoutes) // Public
+router.put('/profile/password', verifyJWT, updateUserPassword)
 
 module.exports = router
