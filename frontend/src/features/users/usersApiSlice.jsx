@@ -52,6 +52,14 @@ export const usersApiSlice = baseApiSlice.injectEndpoints({
 				method: 'PUT',
 			}),
 			invalidatesTags: ['User'],
+			async onQueryStarted(id, { dispatch, queryFulfilled }) {
+				try {
+					const { data } = await queryFulfilled
+					dispatch(setUser(data))
+				} catch (error) {
+					console.error('Failed to follow user:', error)
+				}
+			},
 		}),
 		unfollowUser: builder.mutation({
 			query: (id) => ({
@@ -59,6 +67,14 @@ export const usersApiSlice = baseApiSlice.injectEndpoints({
 				method: 'PUT',
 			}),
 			invalidatesTags: ['User'],
+			async onQueryStarted(id, { dispatch, queryFulfilled }) {
+				try {
+					const { data } = await queryFulfilled
+					dispatch(setUser(data))
+				} catch (error) {
+					console.error('Failed to follow user:', error)
+				}
+			},
 		}),
 		getFollowers: builder.query({
 			query: (id) => `users/followers/${id}`,
