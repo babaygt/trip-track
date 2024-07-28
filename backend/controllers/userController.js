@@ -252,7 +252,15 @@ const unbookmarkRoute = asyncHandler(async (req, res) => {
 
 // Get bookmarks
 const getBookmarks = asyncHandler(async (req, res) => {
-	const user = await User.findById(req.params.id).populate('bookmarks')
+	const user = await User.findById(req.user.id)
+		.populate({
+			path: 'bookmarks',
+			populate: {
+				path: 'creator',
+				select: 'name username profilePicture',
+			},
+		})
+		.exec()
 
 	if (user) {
 		return res.status(200).json(user.bookmarks)

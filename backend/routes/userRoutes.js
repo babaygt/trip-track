@@ -27,7 +27,7 @@ router.get('/followers/:id', getFollowers) // Public
 router.get('/following/:id', getFollowing) // Public
 router.put('/bookmark/:routeId', verifyJWT, bookmarkRoute)
 router.put('/unbookmark/:routeId', verifyJWT, unbookmarkRoute)
-router.get('/bookmarks/:id', getBookmarks) // Public
+router.get('/bookmarks', verifyJWT, getBookmarks)
 router.put('/secure', verifyJWT, secureProfile)
 router.get('/current', verifyJWT, getCurrentUser)
 router.get('/:id/routes', getUserRoutes) // Public
