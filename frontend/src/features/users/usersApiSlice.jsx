@@ -16,7 +16,7 @@ export const usersApiSlice = baseApiSlice.injectEndpoints({
 			async onQueryStarted(arg, { dispatch, queryFulfilled }) {
 				try {
 					const { data } = await queryFulfilled
-					dispatch(setUser(data)) // Dispatch Redux action to update user state
+					dispatch(setUser(data))
 				} catch (error) {
 					console.error('Failed to fetch current user:', error)
 				}
@@ -52,14 +52,6 @@ export const usersApiSlice = baseApiSlice.injectEndpoints({
 				method: 'PUT',
 			}),
 			invalidatesTags: ['User'],
-			async onQueryStarted(id, { dispatch, queryFulfilled }) {
-				try {
-					const { data } = await queryFulfilled
-					dispatch(setUser(data)) // Update the current user in Redux
-				} catch (error) {
-					console.error('Failed to follow user:', error)
-				}
-			},
 		}),
 		unfollowUser: builder.mutation({
 			query: (id) => ({
@@ -67,14 +59,14 @@ export const usersApiSlice = baseApiSlice.injectEndpoints({
 				method: 'PUT',
 			}),
 			invalidatesTags: ['User'],
-			async onQueryStarted(id, { dispatch, queryFulfilled }) {
-				try {
-					const { data } = await queryFulfilled
-					dispatch(setUser(data)) // Update the current user in Redux
-				} catch (error) {
-					console.error('Failed to unfollow user:', error)
-				}
-			},
+		}),
+		getFollowers: builder.query({
+			query: (id) => `users/followers/${id}`,
+			providesTags: ['User'],
+		}),
+		getFollowing: builder.query({
+			query: (id) => `users/following/${id}`,
+			providesTags: ['User'],
 		}),
 	}),
 })
@@ -88,4 +80,6 @@ export const {
 	useUpdateUserPasswordMutation,
 	useFollowUserMutation,
 	useUnfollowUserMutation,
+	useGetFollowersQuery,
+	useGetFollowingQuery,
 } = usersApiSlice

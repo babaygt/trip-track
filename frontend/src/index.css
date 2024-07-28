@@ -1059,6 +1059,7 @@ input:disabled ~ .inputBox-icon {
 	display: flex;
 	align-items: center;
 	gap: var(--size-100);
+	text-decoration: none;
 }
 
 .user-stat-number {
@@ -1070,6 +1071,13 @@ input:disabled ~ .inputBox-icon {
 .user-stat-label {
 	font-size: var(--font-size-500);
 	color: var(--color-neutral-900);
+	text-decoration: none;
+	transition: color 0.3s;
+}
+
+.user-stat-label:hover {
+	color: var(--color-primary-500);
+	font-weight: var(--font-weight-bold);
 }
 
 .user-routes {
@@ -1127,6 +1135,94 @@ input:disabled ~ .inputBox-icon {
 	text-align: center;
 	margin-bottom: var(--size-400);
 	color: var(--color-primary-700);
+}
+
+/* User Card */
+.user-card {
+	display: flex;
+	align-items: center;
+	gap: var(--size-400);
+	padding: var(--size-400);
+	background-color: var(--color-neutral-100);
+	border-radius: var(--size-500);
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+	margin-bottom: var(--size-400);
+}
+
+.user-card-picture {
+	border-radius: 50%;
+	width: var(--size-700);
+	height: var(--size-700);
+}
+
+.user-card-info {
+	display: flex;
+	align-items: center;
+	gap: var(--size-200);
+	flex-grow: 1;
+}
+
+.user-card-name {
+	font-size: var(--font-size-500);
+	color: var(--color-neutral-900);
+	text-decoration: none;
+	font-weight: var(--font-weight-bold);
+}
+
+.user-card-name:hover,
+.user-card-name:focus {
+	color: var(--color-primary-500);
+}
+
+.user-card-username {
+	font-size: var(--font-size-500);
+	color: var(--color-neutral-600);
+	margin: 0;
+}
+
+.user-card-follow,
+.user-card-unfollow {
+	padding: var(--size-200) var(--size-400);
+	font-size: var(--font-size-nav);
+	border: none;
+	border-radius: var(--size-500);
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.user-card-follow {
+	background-color: var(--color-primary-500);
+	color: white;
+}
+
+.user-card-follow:hover,
+.user-card-follow:focus {
+	background-color: var(--color-primary-700);
+}
+
+.user-card-unfollow {
+	background-color: var(--color-accent-500);
+	color: white;
+}
+
+.user-card-unfollow:hover,
+.user-card-unfollow:focus {
+	background-color: var(--color-accent-700);
+}
+
+.followers-page,
+.following-page {
+	padding: var(--size-400);
+	max-width: 50rem;
+	margin: 0 auto;
+}
+
+.followers-page h2,
+.following-page h2 {
+	font-size: var(--font-size-700);
+	color: var(--color-neutral-900);
+	text-align: center;
+	margin-bottom: var(--size-400);
 }
 
 /* Utility classes */

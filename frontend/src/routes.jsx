@@ -9,6 +9,8 @@ import SingleRoutePost from './pages/routes/SingleRoutePost'
 import UserProfile from './pages/users/UserProfile'
 import EditProfile from './pages/users/EditProfile'
 import UpdatePassword from './pages/users/UpdatePassword'
+import FollowersPage from './pages/users/FollowersPage'
+import FollowingPage from './pages/users/FollowingPage'
 
 const routes = [
 	{
@@ -35,12 +37,20 @@ const routes = [
 						element: <UserProfile />,
 					},
 					{
-						path: 'edit-profile', // Define the path for the edit profile page
+						path: 'edit-profile',
 						element: <EditProfile />,
 					},
 					{
 						path: 'update-password',
-						element: <UpdatePassword />, // Add the path for updating the password
+						element: <UpdatePassword />,
+					},
+					{
+						path: 'user/:id/followers',
+						element: <FollowersPage />,
+					},
+					{
+						path: 'user/:id/following',
+						element: <FollowingPage />,
 					},
 				],
 			},

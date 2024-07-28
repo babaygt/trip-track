@@ -129,12 +129,16 @@ const UserProfile = () => {
 
 						<div className='user-stat'>
 							<p className='user-stat-number'>{user.followers.length}</p>
-							<p className='user-stat-label'>Followers</p>
+							<Link to={`/user/${id}/followers`} className='user-stat-label'>
+								<p>Followers</p>
+							</Link>
 						</div>
 
 						<div className='user-stat'>
 							<p className='user-stat-number'>{user.following.length}</p>
-							<p className='user-stat-label'>Following</p>
+							<Link to={`/user/${id}/following`} className='user-stat-label'>
+								<p>Following</p>
+							</Link>
 						</div>
 					</div>
 
