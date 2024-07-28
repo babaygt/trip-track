@@ -93,7 +93,7 @@ const UserProfile = () => {
 							{currentUser && currentUser._id === user._id ? (
 								<>
 									<Link
-										to='/edit-profile '
+										to='/edit-profile'
 										className='button user-profile-button'
 									>
 										Edit Profile
@@ -105,10 +105,14 @@ const UserProfile = () => {
 									>
 										Change Password
 									</Link>
+
+									<Link to='/bookmarks' className='button user-profile-button'>
+										Bookmarks
+									</Link>
 								</>
 							) : (
 								<button
-									className={`button  ${
+									className={`button ${
 										isFollowing
 											? 'user-profile-button-unfollow'
 											: 'user-profile-button'

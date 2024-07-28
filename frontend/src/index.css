@@ -1225,6 +1225,20 @@ input:disabled ~ .inputBox-icon {
 	margin-bottom: var(--size-400);
 }
 
+/* Bookmarks Page */
+.bookmarks-page {
+	padding: var(--size-400);
+	max-width: 50rem;
+	margin: 0 auto;
+}
+
+.bookmarks-page h2 {
+	font-size: var(--font-size-800);
+	color: var(--color-primary-700);
+	margin-bottom: var(--size-400);
+	text-align: center;
+}
+
 /* Utility classes */
 
 .container {

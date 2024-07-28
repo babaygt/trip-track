@@ -84,6 +84,10 @@ export const usersApiSlice = baseApiSlice.injectEndpoints({
 			query: (id) => `users/following/${id}`,
 			providesTags: ['User'],
 		}),
+		getBookmarks: builder.query({
+			query: () => `users/bookmarks`,
+			providesTags: ['User'],
+		}),
 	}),
 })
 
@@ -98,4 +102,5 @@ export const {
 	useUnfollowUserMutation,
 	useGetFollowersQuery,
 	useGetFollowingQuery,
+	useGetBookmarksQuery,
 } = usersApiSlice

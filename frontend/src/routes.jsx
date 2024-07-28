@@ -11,6 +11,7 @@ import EditProfile from './pages/users/EditProfile'
 import UpdatePassword from './pages/users/UpdatePassword'
 import FollowersPage from './pages/users/FollowersPage'
 import FollowingPage from './pages/users/FollowingPage'
+import BookmarksPage from './pages/users/BookmarksPage'
 
 const routes = [
 	{
@@ -51,6 +52,10 @@ const routes = [
 					{
 						path: 'user/:id/following',
 						element: <FollowingPage />,
+					},
+					{
+						path: 'bookmarks',
+						element: <BookmarksPage />,
 					},
 				],
 			},
