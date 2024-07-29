@@ -1,17 +1,24 @@
+import { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import navLogo from '../assets/images/nav-logo.png'
 import { InputBox } from './common/InputBox'
 import { selectCurrentToken, logOut } from '../features/auth/authSlice'
 import { useSendLogoutMutation } from '../features/auth/authApiSlice'
+import { useSearchUsersMutation } from '../features/users/usersApiSlice'
 import ClipLoader from 'react-spinners/ClipLoader'
 import { Toaster, toast } from 'react-hot-toast'
-import { useEffect } from 'react'
+import useDebounce from '../hooks/useDebounce'
+import SearchResults from './common/SearchResults'
 
 export const Navbar = () => {
 	const dispatch = useDispatch()
 	const token = useSelector(selectCurrentToken)
 	const [sendLogout, { isLoading, isError, error }] = useSendLogoutMutation()
+	const [searchQuery, setSearchQuery] = useState('')
+	const debouncedSearchQuery = useDebounce(searchQuery, 300)
+	const [searchUsers, { data: searchResults }] = useSearchUsersMutation()
+	const [isSearchFocused, setIsSearchFocused] = useState(false)
 
 	const handleLogout = async () => {
 		await sendLogout().unwrap()
@@ -25,6 +32,16 @@ export const Navbar = () => {
 		}
 	}, [isError, error])
 
+	useEffect(() => {
+		if (debouncedSearchQuery) {
+			searchUsers({ query: debouncedSearchQuery })
+		}
+	}, [debouncedSearchQuery, searchUsers])
+
+	const handleSearchChange = (e) => {
+		setSearchQuery(e.target.value)
+	}
+
 	return (
 		<>
 			<Toaster position='top-center' reverseOrder={false} />
@@ -35,14 +52,24 @@ export const Navbar = () => {
 					</NavLink>
 				</div>
 
-				<div>
+				<div className='search'>
 					<InputBox
 						name='search'
 						type='text'
 						id='search'
 						placeholder='Search...'
 						icon='fi-rr-search'
+						value={searchQuery}
+						onChange={handleSearchChange}
+						onFocus={() => setIsSearchFocused(true)}
+						onBlur={() => setTimeout(() => setIsSearchFocused(false), 200)} // Timeout to allow click
 					/>
+					{isSearchFocused && searchResults && searchResults.length > 0 && (
+						<SearchResults
+							results={searchResults}
+							onResultClick={() => setIsSearchFocused(false)}
+						/>
+					)}
 				</div>
 
 				<nav className='primary-navigation'>
@@ -50,6 +77,7 @@ export const Navbar = () => {
 						<li className='nav-item'>
 							<NavLink to='/'>Home</NavLink>
 						</li>
+
 						{token ? (
 							<>
 								<li className='nav-item'>
