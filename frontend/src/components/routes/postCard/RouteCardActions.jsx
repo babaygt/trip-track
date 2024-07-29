@@ -3,8 +3,10 @@ import {
 	useLikeRouteMutation,
 	useBookmarkRouteMutation,
 	useUnbookmarkRouteMutation,
+	useDeleteRouteMutation,
 } from '../../../features/routes/routesApiSlice'
 import { toast } from 'react-hot-toast'
+import CustomModal from '../../CustomModal'
 
 const RouteCardActions = ({
 	routeId,
@@ -15,14 +17,17 @@ const RouteCardActions = ({
 	setCommentBoxOpen,
 	currentUser,
 	totalCommentsLength,
+	creatorId,
 }) => {
 	const [likeRoute] = useLikeRouteMutation()
 	const [bookmarkRoute] = useBookmarkRouteMutation()
 	const [unbookmarkRoute] = useUnbookmarkRouteMutation()
+	const [deleteRoute] = useDeleteRouteMutation()
 
 	const [liked, setLiked] = useState(isInitiallyLiked)
 	const [bookmarked, setBookmarked] = useState(isInitiallyBookmarked)
 	const [likesCount, setLikesCount] = useState(initialLikes)
+	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
 	useEffect(() => {
 		setLiked(isInitiallyLiked)
@@ -41,7 +46,6 @@ const RouteCardActions = ({
 		try {
 			await likeRoute({ routeId, like: !liked }).unwrap()
 		} catch (error) {
-			// Handle error, possibly revert the like state if it fails
 			console.error('Failed to like/unlike the route:', error)
 			setLiked(liked)
 			setLikesCount(liked ? likesCount + 1 : likesCount - 1)
@@ -63,7 +67,7 @@ const RouteCardActions = ({
 			}
 		} catch (error) {
 			console.error('Failed to toggle bookmark:', error)
-			setBookmarked(bookmarked) // Revert if failed
+			setBookmarked(bookmarked)
 		}
 	}
 
@@ -74,6 +78,17 @@ const RouteCardActions = ({
 		}
 
 		setCommentBoxOpen(!commentBoxOpen)
+	}
+
+	const handleDelete = async () => {
+		try {
+			await deleteRoute(routeId).unwrap()
+			toast.success('Route deleted successfully.')
+		} catch (error) {
+			toast.error('Failed to delete the route.')
+		} finally {
+			setIsDeleteModalOpen(false)
+		}
 	}
 
 	return (
@@ -120,6 +135,22 @@ const RouteCardActions = ({
 					className={`fi ${bookmarked ? 'fi-sr-bookmark' : 'fi-rr-bookmark'} `}
 				></i>
 			</span>
+
+			{currentUser && currentUser._id === creatorId && (
+				<span
+					className='route-card-actions-logo route-card-actions-delete'
+					onClick={() => setIsDeleteModalOpen(true)}
+				>
+					<i className='fi fi-rr-trash'></i>
+				</span>
+			)}
+
+			<CustomModal
+				isOpen={isDeleteModalOpen}
+				onRequestClose={() => setIsDeleteModalOpen(false)}
+				contentLabel='Are you sure you want to delete this route?'
+				onConfirm={handleDelete}
+			/>
 		</div>
 	)
 }

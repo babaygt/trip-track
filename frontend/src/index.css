@@ -1239,6 +1239,53 @@ input:disabled ~ .inputBox-icon {
 	text-align: center;
 }
 
+.modal {
+	background-color: white;
+	border-radius: 8px;
+	padding: 20px;
+	max-width: 500px;
+	margin: 0 auto;
+}
+
+.modal-overlay {
+	background-color: rgba(0, 0, 0, 0.75);
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+}
+
+.modal-actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+}
+
+.modal-delete-button {
+	background-color: var(--color-accent-500);
+	color: white;
+}
+
+.modal-delete-button:hover,
+.modal-delete-button:focus {
+	background-color: var(--color-accent-700);
+}
+
+.modal-cancel-button {
+	background-color: var(--color-neutral-700);
+	color: white;
+}
+
+.modal-cancel-button:hover,
+.modal-cancel-button:focus {
+	background-color: var(--color-neutral-800);
+}
+
 /* Utility classes */
 
 .container {

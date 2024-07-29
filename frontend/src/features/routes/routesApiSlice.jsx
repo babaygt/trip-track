@@ -51,6 +51,13 @@ export const routesApiSlice = baseApiSlice.injectEndpoints({
 			}),
 			invalidatesTags: ['Routes'],
 		}),
+		deleteRoute: builder.mutation({
+			query: (routeId) => ({
+				url: `/routes/${routeId}`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: ['Routes'],
+		}),
 	}),
 })
 
@@ -63,4 +70,5 @@ export const {
 	useBookmarkRouteMutation,
 	useUnbookmarkRouteMutation,
 	useCommentOnRouteMutation,
+	useDeleteRouteMutation,
 } = routesApiSlice

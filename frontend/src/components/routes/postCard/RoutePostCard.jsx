@@ -50,6 +50,7 @@ const RoutePostCard = ({ route }) => {
 				setCommentBoxOpen={setCommentBoxOpen}
 				currentUser={currentUser}
 				totalCommentsLength={route.comments.length}
+				creatorId={route.creator._id}
 			/>
 			<CommentSection routeId={route._id} commentBoxOpen={commentBoxOpen} />{' '}
 		</div>
