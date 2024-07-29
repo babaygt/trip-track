@@ -9,8 +9,6 @@ const BookmarksPage = () => {
 	const currentUser = useSelector(selectCurrentUser)
 	const { data: bookmarks, isLoading, isError, error } = useGetBookmarksQuery()
 
-	console.log(bookmarks)
-
 	if (isLoading) {
 		return <ClipLoader color='#28af60' loading size={150} />
 	}

@@ -212,11 +212,14 @@ body {
 	align-items: center;
 	gap: clamp(var(--size-400), 5vw, var(--size-600));
 	font-weight: var(--font-weight-bold);
+	margin: 0;
+	padding: 0;
 }
 
 .nav-item {
 	list-style: none;
 }
+
 .nav-item a {
 	text-decoration: none;
 	color: var(--color-neutral-900);
@@ -231,6 +234,12 @@ body {
 .nav-logo img {
 	max-width: 10rem;
 	height: auto; /* Maintain aspect ratio */
+}
+
+.nav-user-profile-picture {
+	width: var(--size-600);
+	height: var(--size-600);
+	border-radius: 50%;
 }
 
 /* Input Box */
@@ -769,6 +778,7 @@ input:disabled ~ .inputBox-icon {
 	font-weight: var(--font-weight-bold);
 	font-size: var(--font-size-600);
 	color: var(--color-neutral-900);
+	text-transform: capitalize;
 }
 
 .route-card-description {
