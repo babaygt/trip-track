@@ -1286,6 +1286,59 @@ input:disabled ~ .inputBox-icon {
 	background-color: var(--color-neutral-800);
 }
 
+/* Search */
+
+.search {
+	position: relative;
+}
+
+.search-results {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 100%;
+	background-color: var(--color-neutral-100);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	z-index: 1000;
+	max-height: 20rem;
+	overflow-y: auto;
+}
+
+.search-result-item {
+	display: flex;
+	align-items: center;
+	padding: var(--size-300);
+	cursor: pointer;
+	transition: background-color 0.3s;
+	border-bottom: 1px solid var(--color-neutral-300);
+}
+
+.search-result-item:hover {
+	background-color: var(--color-neutral-200);
+}
+
+.search-result-img {
+	width: var(--size-700);
+	height: var(--size-700);
+	border-radius: 50%;
+	margin-right: var(--size-300);
+}
+
+.search-result-info {
+	display: flex;
+	flex-direction: column;
+}
+
+.search-result-name {
+	font-weight: bold;
+	color: var(--color-neutral-900);
+}
+
+.search-result-username {
+	color: var(--color-neutral-600);
+	margin-top: var(--size-100);
+}
+
 /* Utility classes */
 
 .container {
