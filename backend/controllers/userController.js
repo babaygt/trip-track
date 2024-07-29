@@ -343,6 +343,25 @@ const updateUserPassword = asyncHandler(async (req, res) => {
 	return res.status(200).json({ message: 'Password updated successfully' })
 })
 
+const searchUsers = asyncHandler(async (req, res) => {
+	const { query } = req.query
+	if (!query) {
+		return res.status(400).json({ message: 'Query is required' })
+	}
+
+	const users = await User.find({
+		$or: [
+			{ name: new RegExp(query, 'i') },
+			{ username: new RegExp(query, 'i') },
+		],
+	})
+		.select('name username profilePicture')
+		.lean()
+		.exec()
+
+	return res.status(200).json(users)
+})
+
 module.exports = {
 	registerUser,
 	getUserProfile,
@@ -358,4 +377,5 @@ module.exports = {
 	getCurrentUser,
 	getUserRoutes,
 	updateUserPassword,
+	searchUsers,
 }

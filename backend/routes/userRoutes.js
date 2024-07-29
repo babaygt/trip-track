@@ -15,6 +15,7 @@ const {
 	getCurrentUser,
 	getUserRoutes,
 	updateUserPassword,
+	searchUsers,
 } = require('../controllers/userController')
 const verifyJWT = require('../middleware/verifyJWT')
 
@@ -32,5 +33,6 @@ router.put('/secure', verifyJWT, secureProfile)
 router.get('/current', verifyJWT, getCurrentUser)
 router.get('/:id/routes', getUserRoutes) // Public
 router.put('/profile/password', verifyJWT, updateUserPassword)
+router.get('/search', searchUsers) // Public
 
 module.exports = router
