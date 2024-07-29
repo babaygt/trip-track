@@ -88,6 +88,12 @@ export const usersApiSlice = baseApiSlice.injectEndpoints({
 			query: () => `users/bookmarks`,
 			providesTags: ['User'],
 		}),
+		searchUsers: builder.mutation({
+			query: ({ query }) => ({
+				url: `users/search?query=${query}`,
+				method: 'GET',
+			}),
+		}),
 	}),
 })
 
@@ -103,4 +109,5 @@ export const {
 	useGetFollowersQuery,
 	useGetFollowingQuery,
 	useGetBookmarksQuery,
+	useSearchUsersMutation,
 } = usersApiSlice
