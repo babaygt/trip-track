@@ -50,7 +50,7 @@ const createRoute = asyncHandler(async (req, res) => {
 // Get a specific route
 const getRoute = asyncHandler(async (req, res) => {
 	const route = await Route.findById(req.params.id)
-		.populate('creator', 'name username')
+		.populate('creator', 'name username profilePicture')
 		.lean()
 		.exec()
 
