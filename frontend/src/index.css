@@ -78,6 +78,9 @@
 	--size-700: 3rem;
 	--size-800: 4rem;
 	--size-900: 5rem;
+
+	--border-radius: var(--size-200);
+	--box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
 /* Reset */
@@ -1347,6 +1350,139 @@ input:disabled ~ .inputBox-icon {
 .search-result-username {
 	color: var(--color-neutral-600);
 	margin-top: var(--size-100);
+}
+
+/* Conversation List */
+.messages-page {
+	background-color: var(--color-neutral-100);
+	padding: var(--size-400);
+	border-radius: var(--border-radius);
+	box-shadow: var(--box-shadow);
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: var(--size-600);
+	max-width: 50rem;
+}
+
+.conversation-link {
+	text-decoration: none;
+	color: var(--color-neutral-900);
+	width: 100%;
+}
+
+.conversation-card {
+	display: flex;
+	align-items: center;
+	gap: var(--size-300);
+	padding: var(--size-400);
+	background-color: var(--color-neutral-300);
+	border-radius: var(--border-radius);
+	box-shadow: var(--box-shadow);
+	margin-bottom: var(--size-400);
+	transition: background-color 0.3s;
+	width: 100%;
+}
+
+.conversation-card:hover {
+	background-color: var(--color-primary-500);
+	color: var(--color-neutral-100);
+}
+
+.conversation-participant-picture {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+}
+
+/* Conversation Page */
+.conversation-page {
+	background-color: var(--color-neutral-100);
+	padding: var(--size-100) var(--size-500) var(--size-400);
+	border-radius: var(--border-radius);
+	box-shadow: var(--box-shadow);
+	margin-top: var(--size-200);
+	max-width: 50rem;
+	margin: 0 auto;
+	margin-top: var(--size-400);
+}
+
+.conversation-page-title,
+.messages-page-title {
+	font-size: var(--font-size-700);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-primary-700);
+	margin-top: var(--size-200);
+	margin-bottom: var(--size-400);
+	text-align: center;
+}
+
+.conversation-page-messages {
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-400);
+	max-height: 60vh;
+	overflow-y: auto;
+	padding: var(--size-400);
+	border: 1px solid var(--color-neutral-300);
+	border-radius: var(--border-radius);
+	background-color: var(--color-neutral-300);
+}
+
+.conversation-page-message {
+	display: flex;
+	align-items: center;
+	gap: var(--size-400);
+	max-width: 70%;
+}
+
+.conversation-page-message-sender-picture {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+}
+
+.conversation-page-message-content {
+	background-color: var(--color-primary-500);
+	padding: var(--size-200);
+	border-radius: var(--border-radius);
+	color: var(--color-neutral-100);
+}
+
+.conversation-page-message-text {
+	margin: 0;
+}
+
+.conversation-page-message-time {
+	font-size: var(--font-size-400);
+	color: var(--color-neutral-400);
+}
+
+.sent {
+	align-self: flex-end;
+}
+
+.received {
+	align-self: flex-start;
+}
+
+.conversation-page-message-input {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--size-400);
+	margin-top: var(--size-400);
+	border-top: 1px solid var(--color-neutral-300);
+	padding-top: var(--size-400);
+}
+
+.conversation-page-message-send-button {
+	font-size: var(--font-size-nav);
+	background-color: var(--color-primary-500);
+	margin-top: 0;
+}
+
+.conversation-page-message-send-button:hover {
+	background-color: var(--color-primary-800);
 }
 
 /* Utility classes */
