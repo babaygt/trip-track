@@ -7,6 +7,6 @@ const verifyJWT = require('../middleware/verifyJWT')
 const router = express.Router()
 
 router.post('/', verifyJWT, createConversation)
-router.get('/:userId', verifyJWT, getConversations)
+router.get('/', verifyJWT, getConversations)
 
 module.exports = router
