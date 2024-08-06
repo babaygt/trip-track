@@ -21,7 +21,7 @@ const UserCard = ({ user }) => {
 			dispatch(setUser(updatedUser))
 			toast.success('Followed successfully')
 		} catch (err) {
-			toast.error('Failed to follow user')
+			toast.error(err.data.message || 'Failed to follow user')
 		}
 	}
 
@@ -31,7 +31,7 @@ const UserCard = ({ user }) => {
 			dispatch(setUser(updatedUser))
 			toast.success('Unfollowed successfully')
 		} catch (err) {
-			toast.error('Failed to unfollow user')
+			toast.error(err.data.message || 'Failed to unfollow user')
 		}
 	}
 
