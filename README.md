@@ -15,9 +15,10 @@ Welcome to Trip Track! Trip Track is a route sharing social media platform that 
   - [Usage](#usage)
   - [API Endpoints](#api-endpoints)
     - [User Endpoints](#user-endpoints)
-    - [Routes Endpoints](#routes-endpoints)
+    - [Route Endpoints](#route-endpoints)
     - [Conversation Endpoints](#conversation-endpoints)
     - [Message Endpoints](#message-endpoints)
+    - [Auth Endpoints](#auth-endpoints)
   - [Contributing](#contributing)
   - [License](#license)
 
@@ -50,15 +51,15 @@ Welcome to Trip Track! Trip Track is a route sharing social media platform that 
 ### Backend
 
 - The backend implementation is mostly complete.
-- Routes and controllers for users, routes, conversations, and messages are finished.
+- Routes and controllers for authentication, users, routes, conversations, and messages are finished.
 - The backend is set up with MongoDB and uses Express for the server.
-- Authentication and authorization will be added.
+- Authentication is handled with JWT and cookie-based refresh tokens.
 
 ### Frontend
 
-- The frontend setup has been initialized.
-- Basic structure have been created.
-- There is still significant work to be done on the frontend, including building out the user interface and connecting to the backend API.
+- The frontend implementation is in progress.
+- Features such as route creation, user interaction, and private messaging are implemented.
+- Pages such as feed, user profile, and messages are finished.
 
 ## Setup
 
@@ -81,7 +82,10 @@ Welcome to Trip Track! Trip Track is a route sharing social media platform that 
 
    ```env
    PORT=3500
-   MONGO_URI=YOUR_MONGODB_CONNECTION_STRING
+   MONGO_URI=your_mongodb_connection_string
+   ACCESS_TOKEN_SECRET=your_access_token_secret
+   REFRESH_TOKEN_SECRET=your_refresh_token_secret
+
    ```
 
 4. **Install dependencies for the frontend:**
@@ -118,39 +122,194 @@ Welcome to Trip Track! Trip Track is a route sharing social media platform that 
 
 ### User Endpoints
 
-- **POST** `/users/register`: Register a new user.
-- **POST** `/users/login`: Login a user.
-- **GET** `/users/profile/:id`: Get user profile.
-- **PUT** `/users/profile`: Update user profile.
-- **PUT** `/users/follow/:id`: Follow another user.
-- **PUT** `/users/unfollow/:id`: Unfollow a user.
-- **GET** `/users/followers/:id`: Get followers.
-- **GET** `/users/following/:id`: Get following.
-- **PUT** `/users/bookmark/:routeId`: Bookmark a route.
-- **PUT** `/users/unbookmark/:routeId`: Unbookmark a route.
-- **GET** `/users/bookmarks`: Get bookmarks.
-- **PUT** `/users/secure`: Secure profile.
+- **Register a new user**
 
-### Routes Endpoints
+  ```http
+  POST /users/register
+  ```
 
-- **POST** `/routes`: Create a new route.
-- **GET** `/routes`: Get general routes.
-- **GET** `/routes/:id`: Get a specific route.
-- **PUT** `/routes/:id`: Update a route.
-- **DELETE** `/routes/:id`: Delete a route.
-- **PUT** `/routes/like/:id`: Like a route.
-- **POST** `/routes/comment/:id`: Comment on a route.
-- **GET** `/routes/followed/:userId`: Get followed routes.
+- **Get user profile**
+
+  ```http
+  GET /users/profile/:id
+  ```
+
+- **Update user profile**
+
+  ```http
+  PUT /users/profile
+  ```
+
+- **Follow a user**
+
+  ```http
+  PUT /users/follow/:id
+  ```
+
+- **Unfollow a user**
+
+  ```http
+  PUT /users/unfollow/:id
+  ```
+
+- **Get followers**
+
+  ```http
+  GET /users/followers/:id
+  ```
+
+- **Get following**
+
+  ```http
+  GET /users/following/:id
+  ```
+
+- **Bookmark a route**
+
+  ```http
+  PUT /users/bookmark/:routeId
+  ```
+
+- **Unbookmark a route**
+
+  ```http
+  PUT /users/unbookmark/:routeId
+  ```
+
+- **Get bookmarks**
+
+  ```http
+  GET /users/bookmarks
+  ```
+
+- **Secure profile**
+
+  ```http
+  PUT /users/secure
+  ```
+
+- **Get current user**
+
+  ```http
+  GET /users/current
+  ```
+
+- **Get routes created by a user**
+
+  ```http
+  GET /users/:id/routes
+  ```
+
+- **Update user password**
+
+  ```http
+  PUT /users/profile/password
+  ```
+
+- **Search users**
+  ```http
+  GET /users/search?query={query}
+  ```
+
+### Route Endpoints
+
+- **Create a new route**
+
+  ```http
+  POST /routes
+  ```
+
+- **Get a specific route**
+
+  ```http
+  GET /routes/:id
+  ```
+
+- **Update a route**
+
+  ```http
+  PUT /routes/:id
+  ```
+
+- **Delete a route**
+
+  ```http
+  DELETE /routes/:id
+  ```
+
+- **Like a route**
+
+  ```http
+  PUT /routes/like/:id
+  ```
+
+- **Comment on a route**
+
+  ```http
+  POST /routes/comment/:id
+  ```
+
+- **Get followed routes**
+
+  ```http
+  GET /routes/followed/:userId
+  ```
+
+- **Get general routes**
+
+  ```http
+  GET /routes
+  ```
+
+- **Get suggestions for places**
+  ```http
+  GET /routes/suggestions?q={query}
+  ```
 
 ### Conversation Endpoints
 
-- **POST** `/conversations`: Create a new conversation.
-- **GET** `/conversations/:userId`: Get all conversations for a user.
+- **Create a new conversation**
+
+  ```http
+  POST /conversations
+  ```
+
+- **Get all conversations for a user**
+  ```http
+  GET /conversations
+  ```
 
 ### Message Endpoints
 
-- **POST** `/messages`: Send a message.
-- **GET** `/messages/:conversationId`: Get messages for a conversation.
+- **Send a message**
+
+  ```http
+  POST /messages
+  ```
+
+- **Get messages for a conversation**
+  ```http
+  GET /messages/:conversationId
+  ```
+
+### Auth Endpoints
+
+- **Login user**
+
+  ```http
+  POST /auth
+  ```
+
+- **Refresh token**
+
+  ```http
+  GET /auth/refresh
+  ```
+
+- **Logout user**
+  ```http
+  POST /auth/logout
+  ```
 
 ## Contributing
 
