@@ -97,9 +97,13 @@ export const Navbar = () => {
 								</li>
 
 								<li className='nav-item'>
-									<Link to={`/user/${currentUser._id}`}>
+									<NavLink to='/messages'>Messages</NavLink>
+								</li>
+
+								<li className='nav-item'>
+									<Link to={`/user/${currentUser?._id}`}>
 										<img
-											src={currentUser.profilePicture}
+											src={currentUser?.profilePicture}
 											alt='Profile'
 											className='nav-user-profile-picture'
 										/>

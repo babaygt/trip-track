@@ -1,10 +1,11 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import {
 	useGetUserProfileQuery,
 	useGetUserRoutesQuery,
 	useFollowUserMutation,
 	useUnfollowUserMutation,
 } from '../../features/users/usersApiSlice'
+import { useCreateConversationMutation } from '../../features/conversations/conversationApiSlice'
 import ClipLoader from 'react-spinners/ClipLoader'
 import { Toaster, toast } from 'react-hot-toast'
 import RoutePostCard from '../../components/routes/postCard/RoutePostCard'
@@ -13,6 +14,7 @@ import { selectCurrentUser, setUser } from '../../features/users/userSlice'
 
 const UserProfile = () => {
 	const { id } = useParams()
+	const navigate = useNavigate()
 	const currentUser = useSelector(selectCurrentUser)
 	const dispatch = useDispatch()
 
@@ -32,6 +34,8 @@ const UserProfile = () => {
 
 	const [followUser] = useFollowUserMutation()
 	const [unfollowUser] = useUnfollowUserMutation()
+	const [createConversation, { isLoading: isCreatingConversation }] =
+		useCreateConversationMutation()
 
 	const handleFollow = async () => {
 		try {
@@ -55,7 +59,18 @@ const UserProfile = () => {
 		}
 	}
 
-	if (isLoadingUser || isLoadingRoutes) {
+	const handleSendMessage = async () => {
+		try {
+			const conversation = await createConversation({
+				participantId: id,
+			}).unwrap()
+			navigate(`/messages/${conversation._id}`)
+		} catch (err) {
+			toast.error('Failed to create conversation')
+		}
+	}
+
+	if (isLoadingUser || isLoadingRoutes || isCreatingConversation) {
 		return <ClipLoader color='#28af60' loading size={150} />
 	}
 
@@ -111,16 +126,24 @@ const UserProfile = () => {
 									</Link>
 								</>
 							) : (
-								<button
-									className={`button ${
-										isFollowing
-											? 'user-profile-button-unfollow'
-											: 'user-profile-button'
-									}`}
-									onClick={isFollowing ? handleUnfollow : handleFollow}
-								>
-									{isFollowing ? 'Unfollow' : 'Follow'}
-								</button>
+								<>
+									<button
+										className={`button ${
+											isFollowing
+												? 'user-profile-button-unfollow'
+												: 'user-profile-button'
+										}`}
+										onClick={isFollowing ? handleUnfollow : handleFollow}
+									>
+										{isFollowing ? 'Unfollow' : 'Follow'}
+									</button>
+									<button
+										className='button user-profile-button'
+										onClick={handleSendMessage}
+									>
+										Send Message
+									</button>
+								</>
 							)}
 						</div>
 					</div>
