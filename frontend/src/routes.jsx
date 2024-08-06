@@ -12,6 +12,8 @@ import UpdatePassword from './pages/users/UpdatePassword'
 import FollowersPage from './pages/users/FollowersPage'
 import FollowingPage from './pages/users/FollowingPage'
 import BookmarksPage from './pages/users/BookmarksPage'
+import Messages from './pages/messages/Messages'
+import Conversation from './pages/messages/Conversation'
 
 const routes = [
 	{
@@ -56,6 +58,14 @@ const routes = [
 					{
 						path: 'bookmarks',
 						element: <BookmarksPage />,
+					},
+					{
+						path: 'messages/:conversationId',
+						element: <Conversation />,
+					},
+					{
+						path: 'messages',
+						element: <Messages />,
 					},
 				],
 			},
