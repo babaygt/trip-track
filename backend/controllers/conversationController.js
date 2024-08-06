@@ -10,12 +10,18 @@ const createConversation = asyncHandler(async (req, res) => {
 		return res.status(400).json({ message: 'Please provide a participant id' })
 	}
 
+	if (participantId === userId) {
+		return res
+			.status(400)
+			.json({ message: 'You cannot create a conversation with yourself' })
+	}
+
 	const existingConversation = await Conversation.findOne({
 		participants: { $all: [participantId, userId] },
 	})
 
 	if (existingConversation) {
-		return res.json(existingConversation)
+		return res.status(200).json(existingConversation)
 	} else {
 		const conversation = new Conversation({
 			participants: [userId, participantId],
@@ -34,7 +40,11 @@ const getConversations = asyncHandler(async (req, res) => {
 		participants: userId,
 	}).populate('participants', 'name username profilePicture')
 
-	return res.json(conversations)
+	if (!conversations) {
+		return res.status(404).json({ message: 'No conversations found' })
+	}
+
+	return res.status(200).json(conversations)
 })
 
 module.exports = {

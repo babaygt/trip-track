@@ -47,7 +47,7 @@ const sendMessage = asyncHandler(async (req, res) => {
 // Get messages for a conversation
 const getMessages = asyncHandler(async (req, res) => {
 	const { conversationId } = req.params
-	const userId = req.user.id // Get userId from the verified token
+	const userId = req.user.id
 
 	const conversation = await Conversation.findById(conversationId)
 
@@ -61,11 +61,15 @@ const getMessages = asyncHandler(async (req, res) => {
 			.json({ message: 'You are not a participant in this conversation' })
 	}
 
-	const messages = await Message.find({ conversation: conversationId })
-		.populate('sender', 'name username profilePicture')
-		.sort({ createdAt: -1 })
+	const messages = await Message.find({
+		conversation: conversationId,
+	}).populate('sender', 'name username profilePicture')
 
-	return res.json(messages)
+	if (!messages) {
+		return res.status(404).json({ message: 'No messages found' })
+	}
+
+	return res.status(200).json(messages)
 })
 
 module.exports = {
