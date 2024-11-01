@@ -12,6 +12,8 @@ Welcome to Trip Track! Trip Track is a route sharing social media platform that 
     - [Backend](#backend)
     - [Frontend](#frontend)
   - [Setup](#setup)
+    - [Using Docker (Recommended)](#using-docker-recommended)
+    - [Manual Setup](#manual-setup)
   - [Usage](#usage)
   - [API Endpoints](#api-endpoints)
     - [User Endpoints](#user-endpoints)
@@ -45,6 +47,9 @@ Welcome to Trip Track! Trip Track is a route sharing social media platform that 
   - Express
   - MongoDB
   - Mongoose
+- **DevOps:**
+  - Docker
+  - Docker Compose
 
 ## Current Status
 
@@ -63,6 +68,39 @@ Welcome to Trip Track! Trip Track is a route sharing social media platform that 
 
 ## Setup
 
+### Using Docker (Recommended)
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/babaygt/trip-track.git
+   cd trip-track
+   ```
+
+2. **Set up environment variables:**
+   Create a `.env` file in the `backend` directory with:
+
+   ```env
+   PORT=3500
+   MONGO_URI=mongodb://mongodb:27017/trip-track # or your MongoDB connection string
+   ACCESS_TOKEN_SECRET=your_access_token_secret
+   REFRESH_TOKEN_SECRET=your_refresh_token_secret
+   ```
+
+3. **Build and run with Docker Compose:**
+
+   ```bash
+   docker-compose up --build
+   ```
+
+   The application will be available at:
+
+   - Frontend: `http://localhost:5173`
+   - Backend: `http://localhost:3500`
+   - MongoDB: `mongodb://localhost:37017`
+
+### Manual Setup
+
 1. **Clone the repository:**
 
    ```bash
@@ -78,14 +116,13 @@ Welcome to Trip Track! Trip Track is a route sharing social media platform that 
    ```
 
 3. **Set up environment variables for the backend:**
-   Create a `.env` file in the `backend` directory and add the following variable:
+   Create a `.env` file in the `backend` directory with:
 
    ```env
    PORT=3500
    MONGO_URI=your_mongodb_connection_string
    ACCESS_TOKEN_SECRET=your_access_token_secret
    REFRESH_TOKEN_SECRET=your_refresh_token_secret
-
    ```
 
 4. **Install dependencies for the frontend:**
@@ -103,7 +140,6 @@ Welcome to Trip Track! Trip Track is a route sharing social media platform that 
    ```
 
 6. **Run the frontend:**
-
    ```bash
    cd ../frontend
    npm run dev
